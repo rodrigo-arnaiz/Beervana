@@ -13,10 +13,11 @@ Route::resource('tipo-fermentaciones', TipoFermentacionController::class);
 Route::resource('estilos', EstiloController::class);
 Route::resource('cervezas', CervezaController::class);
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/home', function () {
     return view('home');
 })->name('home');
+
+Route::get('/', function () {
+    return redirect('home');
+});
+
