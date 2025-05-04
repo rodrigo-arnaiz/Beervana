@@ -1,23 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\TipoFermentacionController;
 use App\Http\Controllers\EstiloController;
 use App\Http\Controllers\CervezaController;
+use App\Http\Controllers\HomeController;
 
-//Crea todas las rutas siguiendo cierta convencion
-Route::resource('marcas', MarcaController::class);
-Route::resource('tipo-fermentaciones', TipoFermentacionController::class);
-Route::resource('estilos', EstiloController::class);
-Route::resource('cervezas', CervezaController::class);
+// desactiva el registro si no lo necesitas
+Auth::routes(['register' => false]);
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
-
+// redirige a login si va a la raíz y no está autenticado
 Route::get('/', function () {
-    return redirect('home');
+    return redirect('/home');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::resource('marcas', MarcaController::class);
+    Route::resource('tipo-fermentaciones', TipoFermentacionController::class);
+    Route::resource('estilos', EstiloController::class);
+    Route::resource('cervezas', CervezaController::class);
+});
