@@ -68,7 +68,7 @@ body {
             padding-left: 0;
         }
 
-        /* Responsive */
+/*         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
                 margin-left: -250px;
@@ -85,5 +85,6 @@ body {
             #content.active {
                 padding-left: 250px;
             }
-        }
+        } */
+        
     </style>

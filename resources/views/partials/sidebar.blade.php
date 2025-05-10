@@ -1,7 +1,9 @@
 <!-- resources/views/partials/sidebar.blade.php -->
 <nav id="sidebar" class="sidebar">
     <div class="sidebar-header">
-        <h3>Beervana</h3>
+    <a href="{{ route('home') }}" class="text-light text-decoration-none d-flex align-items-center">
+    <h3>Beervana</h3>
+</a>
     </div>
     <ul class="list-unstyled components">
         <li class="active">
@@ -13,13 +15,16 @@
                     </a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="{{ route('cervezas.index') }}"><i class="fas fa-file"></i> Listado</a>
+                            <a href="{{ route('cervezas.index') }}"><i class="fas fa-file"></i> Listado de cervezas</a>
                         </li>
                         <li>
                         <a href="{{ route('marcas.index') }}"><i class="fas fa-industry"></i> Marcas</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-file"></i> Page 3</a>
+                            <a href="#"><i class="fas fa-file"></i> Fermentaciones</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fas fa-file"></i> Estilos</a>
                         </li>
                     </ul>
                 </li>

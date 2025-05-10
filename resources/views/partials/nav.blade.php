@@ -1,12 +1,10 @@
 <!-- resources/views/partials/navbar.blade.php -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+
+<div class="container-fluid">
+<button type="button" id="sidebarCollapse" class="btn btn-info">
+    <i class="fas fa-bars"></i>
+</button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto">
