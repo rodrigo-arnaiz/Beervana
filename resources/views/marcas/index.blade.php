@@ -2,15 +2,12 @@
 
 @section('content')
     <h2 class="mb-4">Listado de Marcas</h2>
-
     <a href="{{ route('marcas.create') }}" class="btn btn-primary mb-3">
         <i class="fas fa-plus"></i> Nueva Marca
     </a>
-
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-
     <table class="table table-striped">
         <thead>
             <tr>
@@ -41,4 +38,7 @@
             @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center my-3">
+        {{ $marcas->links() }}
+    </div>
 @endsection

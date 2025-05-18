@@ -13,5 +13,6 @@
             @enderror
         </div>
         <button class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
+        <a href="{{ route('marcas.index') }}" class="btn btn-secondary"><i class="fas fa-ban"></i> Cancelar</a>
     </form>
 @endsection

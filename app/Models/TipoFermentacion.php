@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoFermentacion extends Model
 {
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre', 
+                           'descripcion',
+                           'levadura',
+                           'temperatura',
+                           'tiempo',
+                        ];
 
     public function estilos(){
         return $this->hasMany(Estilo::class);

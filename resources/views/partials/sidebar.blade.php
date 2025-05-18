@@ -18,13 +18,13 @@
                             <a href="{{ route('cervezas.index') }}"><i class="fas fa-file"></i> Listado de cervezas</a>
                         </li>
                         <li>
-                        <a href="{{ route('marcas.index') }}"><i class="fas fa-industry"></i> Marcas</a>
+                            <a href="{{ route('marcas.index') }}"><i class="fas fa-industry"></i> Marcas</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-file"></i> Fermentaciones</a>
+                            <a href="{{ route('tipo-fermentaciones.index') }}"><i class="fas fa-flask"></i> Fermentaciones</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fas fa-file"></i> Estilos</a>
+                            <a href="{{ route('estilos.index') }}"><i class="fas fa-tags"></i> Estilos</a>
                         </li>
                     </ul>
                 </li>

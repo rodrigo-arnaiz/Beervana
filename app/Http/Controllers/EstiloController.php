@@ -11,11 +11,23 @@ class EstiloController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $estilos = Estilo::with('tipoFermentacion')->get();
+        $query = Estilo::with('tipoFermentacion');
 
-        return view('estilos.index', compact('estilos'));
+        if ($request->filled('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->nombre . '%');
+        }
+
+        if ($request->filled('tipo_fermentacion_id')) {
+            $query->where('tipo_fermentacion_id', $request->tipo_fermentacion_id);
+        }
+
+        $estilos = $query->paginate(5)->withQueryString();
+
+        $tipoFermentaciones = TipoFermentacion::orderBy('nombre')->get();
+
+        return view('estilos.index', compact('estilos', 'tipoFermentaciones'));
     }
 
     /**

@@ -51,9 +51,13 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('marcas', MarcaController::class);
-Route::resource('tipo-fermentaciones', TipoFermentacionController::class);
+Route::resource('tipo-fermentaciones', TipoFermentacionController::class)
+    ->parameters(['tipo-fermentaciones' => 'tipoFermentacion']);
 Route::resource('estilos', EstiloController::class);
-Route::resource('cervezas', CervezaController::class);
+Route::resource('cervezas', CervezaController::class)->parameters([
+    'cervezas' => 'cerveza',
+]);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -67,9 +71,11 @@ Route::resource('cervezas', CervezaController::class);
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('marcas', MarcaController::class);
-    Route::resource('tipo-fermentaciones', TipoFermentacionController::class);
+    Route::resource('tipo-fermentaciones', TipoFermentacionController::class)
+    ->parameters(['tipo-fermentaciones' => 'tipoFermentacion']);
     Route::resource('estilos', EstiloController::class);
-    Route::resource('cervezas', CervezaController::class);
+    Route::resource('cervezas', CervezaController::class)->parameters([
+    'cervezas' => 'cerveza',
 });
 */
 

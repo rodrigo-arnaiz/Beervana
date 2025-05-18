@@ -12,12 +12,27 @@ class CervezaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cervezas = Cerveza::with('marca', 'estilo')->get();
+        $marcas  = Marca::orderBy('nombre')->get();
+        $estilos = Estilo::orderBy('nombre')->get();
 
-        return view('cervezas.index', compact('cervezas'));
+        $cervezas = Cerveza::with('marca', 'estilo');
+
+        if ($request->filled('marca_id')) {
+            $cervezas->where('marca_id', $request->marca_id);
+        }
+
+        if ($request->filled('estilo_id')) {
+            $cervezas->where('estilo_id', $request->estilo_id);
+        }
+
+        //$cervezas = $cervezas->get();
+        $cervezas = $cervezas->paginate(5)->withQueryString();
+
+        return view('cervezas.index', compact('cervezas', 'marcas', 'estilos'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -44,7 +59,7 @@ class CervezaController extends Controller
             'estilo_id'=>'required|exists:estilos,id',
             'ibu'=>'required|numeric',
             'capacidad'=>'required|string|max:20',
-            'imagen'=>'required|string|max:80',
+            'imagen'=>'required|string|max:255',
             'descripcion'=>'nullable|string',
         ]);
 
@@ -102,5 +117,5 @@ class CervezaController extends Controller
     {
         $cerveza->delete();
         return redirect()->route('cervezas.index')->with('success','Cerveza eliminada exitosamente');
-    }
+    } 
 }
