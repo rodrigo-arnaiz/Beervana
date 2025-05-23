@@ -15,7 +15,11 @@
 
 <div class="mb-3">
     <label for="tipo_envase" class="form-label">Tipo de Envase</label>
-    <input type="text" name="tipo_envase" class="form-control" value="{{ old('tipo_envase', $cerveza->tipo_envase ?? '') }}" required>
+    <select name="tipo_envase" class="form-select" required>
+        <option value="">— Seleccionar —</option>
+        <option value="Lata" {{ old('tipo_envase', $cerveza->tipo_envase ?? '') == 'Lata' ? 'selected' : '' }}>Lata</option>
+        <option value="Botella" {{ old('tipo_envase', $cerveza->tipo_envase ?? '') == 'Botella' ? 'selected' : '' }}>Botella</option>
+    </select>
 </div>
 
 <div class="mb-3">
@@ -30,7 +34,12 @@
 
 <div class="mb-3">
     <label for="imagen" class="form-label">URL de Imagen</label>
-    <input type="text" name="imagen" class="form-control" value="{{ old('imagen', $cerveza->imagen ?? '') }}" required>
+    <input type="file" name="imagen" class="form-control" accept="image/*" required>
+</div>
+
+<div class="mb-3">
+    <label for="stock" class="form-label">Stock</label>
+    <input type="number" name="stock" class="form-control" value="{{ old('stock', $cerveza->stock ?? '') }}" required>
 </div>
 
 <div class="mb-3">

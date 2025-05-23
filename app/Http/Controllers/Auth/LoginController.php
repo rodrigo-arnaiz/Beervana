@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -25,7 +27,18 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo()
+    {
+        $user = Auth::user();
+
+        if ($user && $user->is_admin) {
+            return '/home';
+        }
+
+        Auth::logout();
+        Session::flash('error', 'Acceso denegado. Debes ser administrador para ingresar.');
+        return '/login';
+    }
 
     /**
      * Create a new controller instance.

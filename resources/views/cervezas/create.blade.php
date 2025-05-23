@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('cervezas.store') }}" method="POST">
+    <form action="{{ route('cervezas.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         @include('cervezas.partials.form')

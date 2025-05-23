@@ -2,8 +2,8 @@
 @extends('layouts.admin')
 
 @section('content')
-<h2 class="mb-4">Dashboard</h2>
-<div class="row">
+<h2 class="mb-4">¡Bienvenido a Beervana!</h2>
+{{-- <div class="row">
     <div class="col-md-3 mb-3">
         <div class="card bg-primary text-white">
             <div class="card-body">
@@ -20,5 +20,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection

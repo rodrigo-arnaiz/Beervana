@@ -8,6 +8,8 @@ use App\Http\Controllers\TipoFermentacionController;
 use App\Http\Controllers\EstiloController;
 use App\Http\Controllers\CervezaController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\AdminMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +20,14 @@ use App\Http\Controllers\Admin\DashboardController;
 | Si se desea bloquear el acceso real, sobreescribir LoginController.
 |
 */
+
 Auth::routes(['register' => false]);
 
 // Rutas de login (opcional, si se sobreescribe el controlador)
-/*
-use App\Http\Controllers\Auth\LoginController;
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+
+/* Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
-*/
+ */
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,7 @@ Route::post('login', [LoginController::class, 'login']);
 |
 */
 Route::get('/', function () {
-    return redirect('/dashboard');
+    return redirect('/login');
 });
 
 /*
@@ -48,7 +50,7 @@ Route::get('/', function () {
 | visualizar el frontend en entornos sin acceso a base de datos.
 |
 */
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+/* Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('marcas', MarcaController::class);
 Route::resource('tipo-fermentaciones', TipoFermentacionController::class)
@@ -56,7 +58,7 @@ Route::resource('tipo-fermentaciones', TipoFermentacionController::class)
 Route::resource('estilos', EstiloController::class);
 Route::resource('cervezas', CervezaController::class)->parameters([
     'cervezas' => 'cerveza',
-]);
+]); */
 
 
 /*
@@ -67,16 +69,15 @@ Route::resource('cervezas', CervezaController::class)->parameters([
 | Este bloque puede reactivarse cuando se quiera requerir login nuevamente.
 |
 */
-/*
-Route::middleware(['auth'])->group(function () {
+
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('marcas', MarcaController::class);
     Route::resource('tipo-fermentaciones', TipoFermentacionController::class)
-    ->parameters(['tipo-fermentaciones' => 'tipoFermentacion']);
+        ->parameters(['tipo-fermentaciones' => 'tipoFermentacion']);
     Route::resource('estilos', EstiloController::class);
     Route::resource('cervezas', CervezaController::class)->parameters([
-    'cervezas' => 'cerveza',
+        'cervezas' => 'cerveza',
+    ]);
 });
-*/
-
-

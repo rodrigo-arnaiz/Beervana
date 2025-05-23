@@ -1,4 +1,3 @@
-
 @extends('layouts.admin')
 
 @section('content')
@@ -16,9 +15,8 @@
             <label for="marca_id" class="form-label">Marca</label>
             <select name="marca_id" id="marca_id" class="form-select">
                 <option value="">— Todas —</option>
-                @foreach($marcas as $marca)
-                    <option value="{{ $marca->id }}"
-                        {{ request('marca_id') == $marca->id ? 'selected' : '' }}>
+                @foreach ($marcas as $marca)
+                    <option value="{{ $marca->id }}" {{ request('marca_id') == $marca->id ? 'selected' : '' }}>
                         {{ $marca->nombre }}
                     </option>
                 @endforeach
@@ -28,9 +26,8 @@
             <label for="estilo_id" class="form-label">Estilo</label>
             <select name="estilo_id" id="estilo_id" class="form-select">
                 <option value="">— Todos —</option>
-                @foreach($estilos as $estilo)
-                    <option value="{{ $estilo->id }}"
-                        {{ request('estilo_id') == $estilo->id ? 'selected' : '' }}>
+                @foreach ($estilos as $estilo)
+                    <option value="{{ $estilo->id }}" {{ request('estilo_id') == $estilo->id ? 'selected' : '' }}>
                         {{ $estilo->nombre }}
                     </option>
                 @endforeach
@@ -54,32 +51,39 @@
                 <th>Estilo</th>
                 <th>Graduación</th>
                 <th>Precio</th>
+                <th>Stock</th>
                 <th>Imagen</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($cervezas as $cerveza)
+            @foreach ($cervezas as $cerveza)
                 <tr>
-                    <td>{{ $cerveza->id }}</td>
-                    <td>{{ $cerveza->nombre }}</td>
-                    <td>{{ $cerveza->marca->nombre ?? '-' }}</td>
-                    <td>{{ $cerveza->estilo->nombre ?? '-' }}</td>
-                    <td>{{ $cerveza->graduacion }}%</td>
-                    <td>${{ number_format($cerveza->precio, 2) }}</td>
+                    <td class="align-middle">{{ $cerveza->id }}</td>
+                    <td class="align-middle">{{ $cerveza->nombre }}</td>
+                    <td class="align-middle">{{ $cerveza->marca->nombre ?? '-' }}</td>
+                    <td class="align-middle">{{ $cerveza->estilo->nombre ?? '-' }}</td>
+                    <td class="align-middle">{{ $cerveza->graduacion }}%</td>
+                    <td class="align-middle">${{ number_format($cerveza->precio, 2) }}</td>
+                    <td class="align-middle">{{ $cerveza->stock }}</td>
                     <td>
-                        <img src="{{ asset($cerveza->imagen) }}" alt="Imagen de {{ $cerveza->nombre }}" style="width: 60px; height: auto;">
+                        <img src="{{ asset('storage/' . $cerveza->imagen) }}" style="width: 100px; height: auto;">
                     </td>
-                    <td>
+                    <td class="align-middle">
                         <a href="{{ route('cervezas.edit', $cerveza) }}" class="btn btn-sm btn-warning">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form action="{{ route('cervezas.destroy', $cerveza) }}" method="POST" class="d-inline"
+                        {{-- <form action="{{ route('cervezas.destroy', $cerveza) }}" method="POST" class="d-inline"
                               onsubmit="return confirm('¿Estás seguro de eliminar esta cerveza?');">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                        </form>
+                        </form> --}}
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#modalEliminar" data-id="{{ $cerveza->id }}"
+                            data-nombre="{{ $cerveza->nombre }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             @endforeach
@@ -88,4 +92,44 @@
     <div class="d-flex justify-content-center">
         {{ $cervezas->links() }}
     </div>
+
+    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="modalEliminarLabel">¿Eliminar cerveza?</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar la cerveza <strong id="nombreCerveza"></strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form id="formEliminar" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const modalEliminar = document.getElementById('modalEliminar');
+        modalEliminar.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const nombre = button.getAttribute('data-nombre');
+
+            const nombreSpan = modalEliminar.querySelector('#nombreCerveza');
+            const form = modalEliminar.querySelector('#formEliminar');
+
+            // Mostrar el nombre en el modal
+            nombreSpan.textContent = nombre;
+
+            // Setear la acción del formulario
+            form.action = `/cervezas/${id}`;
+        });
+    </script>
 @endsection
