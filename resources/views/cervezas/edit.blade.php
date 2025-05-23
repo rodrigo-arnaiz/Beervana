@@ -14,11 +14,11 @@
         </div>
     @endif
 
-    <form action="{{ route('cervezas.update', $cerveza) }}" method="POST">
+    <form action="{{ route('cervezas.update', $cerveza) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
-        @include('cervezas.partials.form', ['cerveza' => $cerveza])
+        @include('cervezas.partials.edit_form', ['cerveza' => $cerveza])
 
         <button type="submit" class="btn btn-primary">Actualizar</button>
         <a href="{{ route('cervezas.index') }}" class="btn btn-secondary">Cancelar</a>
