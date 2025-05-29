@@ -1,9 +1,6 @@
 {
     "version": 2,
     "framework": null,
-    "functions": {
-        "api/index.php": {}
-    },
     "routes": [
         {
             "src": "/build/assets/(.*)",
