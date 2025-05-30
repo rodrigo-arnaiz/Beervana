@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             AdminUserSeeder::class,
+            TipoFermentacionSeeder::class,
+            MarcaSeeder::class,
+            EstiloSeeder::class,
         ]);
     }
 }
