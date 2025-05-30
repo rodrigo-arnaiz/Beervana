@@ -9,18 +9,11 @@
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <button class="btn btn-outline-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
-                    ☰
-                </button>
-                <span class="navbar-brand mb-0 h1">Beervana</span>
-            </div>
-    
-            <form action="{{ route('logout') }}" method="POST" class="mb-0">
-                @csrf
-                <button type="submit" class="btn btn-link text-white">Cerrar sesión</button>
-            </form>
+        <div class="conteiner-fluid">
+            <button class="btn btn-outline-light me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+                ☰
+            </button>
+            <span class="navbar-brand mb-0 h1"></span>
         </div>
     </nav>
 

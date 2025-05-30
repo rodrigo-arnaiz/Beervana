@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cerveza extends Model
 {
-    protected $fillable = ['nombre', 'precio', 'marca_id', 'graduacion', 'tipo_envase', 'estilo_id', 'ibu', 'capacidad', 'imagen', 'stock', 'descripcion'];
+    protected $fillable = ['nombre', 'precio', 'marca_id', 'graduacion', 'tipo_envase', 'estilo_id', 'ibu', 'capacidad', 'imagen', 'descripcion'];
 
     public function marca()
     {

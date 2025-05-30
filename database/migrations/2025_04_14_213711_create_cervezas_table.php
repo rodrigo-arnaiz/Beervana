@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('ibu');
             $table->string('capacidad');
             $table->string('imagen', 80);
-            $table->integer('stock');
             $table->text('descripcion')->nullable();
             $table->timestamps();
         });

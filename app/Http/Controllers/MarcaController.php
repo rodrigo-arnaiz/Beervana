@@ -12,9 +12,7 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas = Marca::orderBy('nombre')         
-                   ->paginate(10)               
-                   ->withQueryString();
+        $marcas = Marca::all();
         return view('marcas.index', compact('marcas'));
     }
 
@@ -59,18 +57,16 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   public function update(Request $request, Marca $marca)
-{
-    $request->validate([
-        'nombre' => 'required|unique:marcas,nombre,' . $marca->id,
-    ]);
+    public function update(Request $request, Marca $marca)
+    {
+        $request->validate([
+            'nombre'=>'required|unique:Marcas,nombre,' . $marca->id,
+        ]);
 
-    $marca->update($request->only('nombre'));
+        $marca->update($request->all());
 
-    return redirect()
-        ->route('marcas.index')
-        ->with('success', 'Marca actualizada exitosamente');
-}
+        return redirect()->route('marcas.index')->with('success','Marca actualizada exitosamente');;
+    }
 
     /**
      * Remove the specified resource from storage.

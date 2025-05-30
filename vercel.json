@@ -15,10 +15,6 @@
             "src": "/images/(.*)",
             "dest": "/public/images/$1"
         },
-            {
-      "src": "/assets/(.*)",
-      "dest": "/public/assets/$1"
-    },
         {
             "src": "/(.*\\.php)",
             "dest": "/api/$1"
