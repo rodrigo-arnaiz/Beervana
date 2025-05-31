@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="mb-4">Listado de Cervezas</h2>
 
-    <a href="{{ route('cervezas.create') }}" class="btn btn-primary mb-3">
+    <a href="{{ route('cervezas.create') }}" class="btn btn-detail-custom mb-3">
         <i class="fas fa-plus"></i> Nueva Cerveza
     </a>
     @if (session('success'))
@@ -34,7 +34,7 @@
             </select>
         </div>
         <div class="col-md-4">
-            <button class="btn btn-primary me-2">
+            <button class="btn btn-detail-custom me-2">
                 <i class="fas fa-filter"></i> Filtrar
             </button>
             <a href="{{ route('cervezas.index') }}" class="btn btn-secondary">
@@ -42,7 +42,7 @@
             </a>
         </div>
     </form>
-    <table class="table table-striped">
+    <table class="table table-striped ">
         <thead>
             <tr>
                 <th>#</th>
@@ -70,7 +70,7 @@
                         <img src="{{ asset('storage/' . $cerveza->imagen) }}" style="width: 100px; height: auto;">
                     </td>
                     <td class="align-middle">
-                        <a href="{{ route('cervezas.edit', $cerveza) }}" class="btn btn-sm btn-warning">
+                        <a href="{{ route('cervezas.edit', $cerveza) }}" class="btn btn-sm btn-edit-custom">
                             <i class="fas fa-edit"></i>
                         </a>
                         {{-- <form action="{{ route('cervezas.destroy', $cerveza) }}" method="POST" class="d-inline"
@@ -79,16 +79,24 @@
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                         </form> --}}
-                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-sm btn-delete-custom" data-bs-toggle="modal"
                             data-bs-target="#modalEliminar" data-id="{{ $cerveza->id }}"
                             data-nombre="{{ $cerveza->nombre }}">
                             <i class="fas fa-trash"></i>
+                        </button>
+                         <button type="button" class="btn btn-sm btn-detail-custom" 
+                            data-bs-toggle="modal"
+                            data-bs-target="#detalleModal{{ $cerveza->id }}">
+                            <i class="fas fa-info-circle"></i>
                         </button>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    @foreach ($cervezas as $cerveza)
+        @includeIf('cervezas.partials.modal_detalle', ['cerveza' => $cerveza])
+    @endforeach
     <div class="d-flex justify-content-center">
         {{ $cervezas->links() }}
     </div>
@@ -96,7 +104,7 @@
     <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
+                <div class="modal-header bg-danger-custom text-white">
                     <h5 class="modal-title" id="modalEliminarLabel">¿Eliminar cerveza?</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Cerrar"></button>
@@ -105,11 +113,11 @@
                     ¿Estás seguro de que deseas eliminar la cerveza <strong id="nombreCerveza"></strong>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-edit-custom" data-bs-dismiss="modal">Cancelar</button>
                     <form id="formEliminar" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-delete-custom">Eliminar</button>
                     </form>
                 </div>
             </div>
