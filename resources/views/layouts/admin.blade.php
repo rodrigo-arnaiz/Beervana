@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     @include('partials.admin-head')
+    <link rel="stylesheet" href="{{ asset('assets/estilos.css') }}">
 </head>
 <body>
     <div class="wrapper">
