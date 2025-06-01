@@ -67,7 +67,7 @@
                     <td class="align-middle">${{ number_format($cerveza->precio, 2) }}</td>
                     <td class="align-middle">{{ $cerveza->stock }}</td>
                     <td>
-                        <img src="{{ asset('storage/' . $cerveza->imagen) }}" style="width: 100px; height: auto;">
+                        <img src="{{ $cerveza->imagen }}" style="width: 100px; height: auto;">
                     </td>
                     <td class="align-middle">
                         <a href="{{ route('cervezas.edit', $cerveza) }}" class="btn btn-sm btn-warning">
