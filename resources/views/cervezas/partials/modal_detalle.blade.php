@@ -13,7 +13,7 @@
         <div class="flex flex-col md:flex-row gap-6">
           <div class="beer-image-container">
             @if($cerveza->imagen)
-              <img src="{{ asset('storage/' . $cerveza->imagen) }}" 
+              <img src="{{ $cerveza->imagen }}"
                    alt="{{ $cerveza->nombre }}" 
                    class="beer-image">
             @else
