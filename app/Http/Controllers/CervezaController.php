@@ -69,6 +69,10 @@ class CervezaController extends Controller
             'descripcion' => 'nullable|string',
         ]);
 
+        if (!$request->hasFile('imagen')) {
+            return back()->withErrors(['imagen' => 'La imagen no se subió correctamente.']);
+        }
+
         #$filename = 'cervezas/' . Str::uuid() . '.' . $request->file('imagen')->getClientOriginalExtension();
         $filename = $request->nombre . Str::uuid();
         $path = Storage::disk('cloudinary')->put($filename, $request->file('imagen'));
