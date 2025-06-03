@@ -10,7 +10,7 @@
 <style>
 body {
             font-family: 'Poppins', sans-serif;
-            background: #f4f7fd;
+            background: #f7f5f2;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -25,13 +25,24 @@ body {
             min-width: 250px;
             max-width: 250px;
             background: #343a40;
-            color: #fff;
+            color: #F2D797;
             position: fixed;
             height: 100vh;
             z-index: 999;
             transition: all 0.3s;
         }
 
+        /* Estilo personalizado para el botón del sidebar */
+        .btn-custom-sidebar {
+            background-color: #D09F58 !important; /* Color dorado */
+            border-color: #D09F58 !important;
+            color: white !important;
+        }
+
+        .btn-custom-sidebar:hover {
+            background-color: #B3894D !important; /* Color dorado oscuro al hover */
+            border-color: #B3894D !important;
+        }
         .sidebar .sidebar-header {
             padding: 20px;
             background: #212529;
@@ -40,15 +51,15 @@ body {
         .sidebar ul li a {
             padding: 10px 20px;
             display: block;
-            color: #ddd;
+            color: #F2D797;
             text-decoration: none;
             transition: 0.3s;
         }
 
         .sidebar ul li a:hover,
         .sidebar ul li.active > a {
-            color: #fff;
-            background: #0d6efd;
+            color: #F2D797!important;
+            background: #D09F58;
         }
 
         #content {
