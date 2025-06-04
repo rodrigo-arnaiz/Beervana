@@ -4,10 +4,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-     $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-            $('#content').toggleClass('active');
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("sidebarCollapse").addEventListener("click", function () {
+            document.querySelector(".sidebar").classList.toggle("active");
+            document.getElementById("content").classList.toggle("active");
         });
     });
 </script>
