@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-
-<div class="row mb-4">
+   <div class="row mb-4">
     <!-- Estadísticas rápidas -->
     <div class="col-md-3">
         <div class="card text-white bg-primary">
@@ -132,5 +131,4 @@
         </ul>
     </div>
 </div>
-
 @endsection

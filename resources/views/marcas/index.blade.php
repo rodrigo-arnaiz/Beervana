@@ -2,7 +2,7 @@
 
 @section('content')
     <h2 class="mb-4">Listado de Marcas</h2>
-    <a href="{{ route('marcas.create') }}" class="btn btn-primary mb-3">
+    <a href="{{ route('marcas.create') }}" class="btn btn-detail-custom mb-3">
         <i class="fas fa-plus"></i> Nueva Marca
     </a>
     @if (session('success'))

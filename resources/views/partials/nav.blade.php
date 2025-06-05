@@ -1,33 +1,26 @@
-<!-- resources/views/partials/navbar.blade.php -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container-fluid">
-        <button type="button" id="sidebarCollapse" class="btn btn-custom-sidebar">
+        <!-- Botón para mobile -->
+        <button class="btn btn-outline-dark d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
             <i class="fas fa-bars"></i>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto">
-                <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="dropdown-item">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    </form>
-                </li>
-                {{-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-user-circle"></i> Admin User
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                                </ul>
-                            </li> --}}
-            </ul>
+        <!-- Título centrado en mobile -->
+        <div class="d-lg-none position-absolute top-50 start-50 translate-middle-x">
+            <a href="{{ route('home') }}" class="text-dark text-decoration-none">
+                <h5 class="mb-0">Beervana</h5>
+            </a>
+        </div>
+
+
+        <!-- Logout a la derecha -->
+        <div class="ms-auto">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
         </div>
     </div>
 </nav>

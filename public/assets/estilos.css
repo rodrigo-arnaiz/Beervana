@@ -166,7 +166,10 @@ button {
 @media (min-width: 992px) {
     .card.login-card {
         width: 87vw; 
-    }
+    }/* 
+    #content {
+        padding-left: 250px;
+    } */
     
     .login-container {
         max-width: 800px;
@@ -394,3 +397,4 @@ button {
 .bg-danger-custom {
     background-color:  #422b0d;
 }
+
