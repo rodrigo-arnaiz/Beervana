@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1 class="mb-4">Estilos</h1>
-        <a href="{{ route('estilos.create') }}" class="btn btn-primary mb-3">
+        <a href="{{ route('estilos.create') }}" class="btn btn-detail-custom mb-3">
             <i class="fas fa-plus"></i> Nuevo Estilo
         </a>
         @if (session('success'))
@@ -27,7 +27,7 @@
                 </select>
             </div>
             <div class="col-md-4">
-                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="submit" class="btn btn-detail-custom me-2">Filtrar</button>
                 <a href="{{ route('estilos.index') }}" class="btn btn-secondary">Limpiar</a>
             </div>
         </form>

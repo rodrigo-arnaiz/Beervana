@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
     @include('partials.admin-head')
-    <link rel="stylesheet" href="{{ asset('assets/estilos.css') }}">
+    
 </head>
 <body>
-    <div class="wrapper">
+    <div class="d-flex">
         @include('partials.sidebar')
-        <div id="content">
+         <div class="flex-grow-1">
             @include('partials.nav')
-            <div class="container-fluid">
+            <div class="container">
                 @yield('content')
             </div>
         </div>

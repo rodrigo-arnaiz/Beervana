@@ -1,38 +1,60 @@
-<!-- resources/views/partials/sidebar.blade.php -->
-<nav id="sidebar" class="sidebar">
-    <div class="sidebar-header">
-        <a href="{{ route('home') }}" class="text-light text-decoration-none d-flex align-items-center">
-            <h3>Beervana</h3>
-        </a>
+<!-- Sidebar fijo en escritorio -->
+    <div class="d-none d-lg-block sidebar bg-dark text-white ">
+                <!-- Título alineado a la izquierda en escritorio -->
+                
+        <nav id="sidebar" class="nav flex-column p-3">
+            <div class="sidebar-header ">
+            <a href="{{ route('home') }}" class="d-flex align-items-center">
+                <h3>Beervana</h3>
+            </a>
+            </div>
+        <hr>    
+           <li>
+            <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+        </li>
+                    <li>
+            <a class="nav-link" href="{{ route('cervezas.index') }}"> <i class="fas fa-beer"></i> Cervezas</a>
+        </li>
+            
+               <li>
+            <a class="nav-link" href="{{ route('marcas.index') }}"><i class="fas fa-industry"></i> Marcas</a>
+        </li>
+               <li>
+            <a class="nav-link" href="{{ route('tipo-fermentaciones.index') }}"><i class="fas fa-flask"></i> Fermentaciones</a>
+        </li>
+         <li>
+            <a class="nav-link" href="{{ route('estilos.index') }}"><i class="fas fa-tags"></i> Estilos</a>
+        </li>
+        </nav>
+ 
+</div>
+
+<!-- Sidebar tipo offcanvas en mobile -->
+<div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+    <div class="offcanvas-header">
+            <a href="{{ route('home') }}" class="text-light text-decoration-none">
+                <h5 class="mb-0">Beervana</h5>
+            </a>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
     </div>
-    <ul class="list-unstyled components">
-        <li class="active">
-            <a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+    <div class="offcanvas-body">
+        <nav class="nav flex-column">
+                    <li>
+            <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
         </li>
-        {{-- <li>
-                    <a href="#pageSubmenu" name="Cerveza" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-beer"></i> Cervezas
-                    </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu"> --}}
-        <li>
-            <a href="{{ route('cervezas.index') }}"> <i class="fas fa-beer"></i> Cervezas</a>
+                    <li>
+            <a class="nav-link" href="{{ route('cervezas.index') }}"> <i class="fas fa-beer"></i> Cervezas</a>
         </li>
-        <li>
-            <a href="{{ route('marcas.index') }}"><i class="fas fa-industry"></i> Marcas</a>
+            
+               <li>
+            <a class="nav-link" href="{{ route('marcas.index') }}"><i class="fas fa-industry"></i> Marcas</a>
         </li>
-        <li>
-            <a href="{{ route('tipo-fermentaciones.index') }}"><i class="fas fa-flask"></i> Fermentaciones</a>
+               <li>
+            <a class="nav-link" href="{{ route('tipo-fermentaciones.index') }}"><i class="fas fa-flask"></i> Fermentaciones</a>
         </li>
-        <li>
-            <a href="{{ route('estilos.index') }}"><i class="fas fa-tags"></i> Estilos</a>
+         <li>
+            <a class="nav-link" href="{{ route('estilos.index') }}"><i class="fas fa-tags"></i> Estilos</a>
         </li>
-        {{-- </ul>
-    </li> --}}
-        {{-- <li>
-            <a href="#"><i class="fas fa-users"></i> Usuarios</a>
-        </li>
-        <li>
-            <a href="#"><i class="fas fa-cog"></i> Configuración</a>
-        </li> --}}
-    </ul>
-</nav>
+        </nav>
+    </div>
+</div>

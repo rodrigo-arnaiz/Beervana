@@ -43,27 +43,7 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Rutas públicas (temporalmente sin middleware 'auth')
-|--------------------------------------------------------------------------
-|
-| Estas rutas normalmente estarían protegidas, pero se exponen para poder
-| visualizar el frontend en entornos sin acceso a base de datos.
-|
-*/
-/* Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::resource('marcas', MarcaController::class);
-Route::resource('tipo-fermentaciones', TipoFermentacionController::class)
-    ->parameters(['tipo-fermentaciones' => 'tipoFermentacion']);
-Route::resource('estilos', EstiloController::class);
-Route::resource('cervezas', CervezaController::class)->parameters([
-    'cervezas' => 'cerveza',
-]); */
-
-
-/*
-|--------------------------------------------------------------------------
-| Rutas protegidas por autenticación (comentadas temporalmente)
+| Rutas protegidas por autenticación
 |--------------------------------------------------------------------------
 |
 | Este bloque puede reactivarse cuando se quiera requerir login nuevamente.
