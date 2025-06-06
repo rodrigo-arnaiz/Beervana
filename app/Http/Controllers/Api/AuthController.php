@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 
@@ -29,6 +30,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        Log::info($request);
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -44,6 +46,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('token')->plainTextToken;
 
+        Log::info($token);
         return response()->json([
             'user' => $user,
             'token' => $token,
