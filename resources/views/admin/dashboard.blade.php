@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
    <div class="row mb-4">
     <!-- Estadísticas rápidas -->
     <div class="col-md-3">
@@ -11,11 +12,13 @@
             </div>
         </div>
     </div>
+
+
     <div class="col-md-3">
         <div class="card text-white bg-success">
             <div class="card-body">
                 <h5 class="card-title">Stock Disponible</h5>
-                <p class="card-text fs-4">1.540 u.</p>
+                <p class="card-text fs-4">{{ $totalStock }} u.</p>
             </div>
         </div>
     </div>

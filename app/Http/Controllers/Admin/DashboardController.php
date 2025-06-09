@@ -17,6 +17,10 @@ class DashboardController extends Controller
 
         $cervezas = Cerveza::all();
 
-        return view('admin.dashboard', compact('cervezas'));
+        $totalStock = $cervezas->sum('stock'); // suma el campo "stock"
+
+        
+
+        return view('admin.dashboard', compact('cervezas', 'totalStock'));
     }
 }

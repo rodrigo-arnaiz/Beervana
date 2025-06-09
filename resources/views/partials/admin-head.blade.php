@@ -10,6 +10,11 @@
             font-family: 'Poppins', sans-serif;
             background: #f8f9fa;
             margin: 0;
+            background-image: url('assets/beervana_background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
         .sidebar {
@@ -19,7 +24,7 @@
         }
 
 .sidebar .sidebar-header a{
-    color: #F2D797; /* el color que querés por defecto */
+    color: #F2D797; 
     text-decoration: none;
 }
 
@@ -32,7 +37,7 @@
 
         .sidebar .nav-link:hover {
             background-color: #D09F58;
-            color: white;
+            color: #F2D797;
         }
 
         .navbar-title {

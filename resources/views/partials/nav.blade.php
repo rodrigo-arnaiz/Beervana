@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-gradient-custom shadow-sm py-3" style="background-color: rgba(219, 174, 126, 0.5);">
     <div class="container-fluid">
         <!-- Botón para mobile -->
         <button class="btn btn-outline-dark d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
@@ -17,8 +17,8 @@
         <div class="ms-auto">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="btn btn-sm btn-outline-danger">
-                    <i class="fas fa-sign-out-alt"></i> Logout
+                <button title="Cerrar sesión" type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="fas fa-sign-out-alt"></i>
                 </button>
             </form>
         </div>
