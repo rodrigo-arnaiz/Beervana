@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1 class="mb-4">Tipos de Fermentación</h1>
-        <a href="{{ route('tipo-fermentaciones.create') }}" class="btn btn-primary mb-3">
+        <a href="{{ route('tipo-fermentaciones.create') }}" class="btn btn-detail-custom mb-3">
             <i class="fas fa-plus"></i> Nuevo Tipo de Fermentación
         </a>
         @if (session('success'))
