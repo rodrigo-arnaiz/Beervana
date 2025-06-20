@@ -26,7 +26,7 @@
         <div class="card text-white bg-warning">
             <div class="card-body">
                 <h5 class="card-title">Pedidos Pendientes</h5>
-                <p class="card-text fs-4">8</p>
+                <p class="card-text fs-4"> {{ $pedidosPendientes }} </p>
             </div>
         </div>
     </div>
@@ -34,9 +34,48 @@
         <div class="card text-white bg-danger">
             <div class="card-body">
                 <h5 class="card-title">Stock Crítico</h5>
-                <p class="card-text fs-4">5 ítems</p>
+                <p class="card-text fs-4">{{ $totalStockCritico }} ítems</p>
             </div>
         </div>
+    </div>
+</div>
+
+
+<!-- Gráfico de facturación por cerveza -->
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Facturación por Cerveza</h5>
+    </div>
+    <div class="card-body">
+        <canvas id="facturacionChart" height="100"></canvas>
+    </div>
+</div>
+
+
+<!-- Ranking de cervezas más vendidas -->
+<div class="card mb-4">
+    <div class="card-header bg-info text-white">
+        <h5 class="mb-0">Top 5 Cervezas Más Vendidas</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        @forelse ($topCervezas as $cerveza)
+            <li class="list-group-item d-flex justify-content-between">
+                {{ $cerveza->nombre }}
+                <span class="badge bg-primary">{{ $cerveza->total_vendido }} ventas</span>
+            </li>
+        @empty
+            <li class="list-group-item text-center text-muted">No hay ventas registradas aún.</li>
+        @endforelse
+    </ul>
+</div>
+
+<!-- Gráfico de stock por marca -->
+<div class="card mb-4">
+    <div class="card-header bg-secondary text-white">
+        <h5 class="mb-0">Gráfico de Stock por Marca</h5>
+    </div>
+    <div class="card-body">
+        <canvas id="stockChart" height="100"></canvas>
     </div>
 </div>
 
@@ -85,53 +124,73 @@
     </div>
 </div>
 
-<!-- Ranking de cervezas más vendidas -->
-<div class="card mb-4">
-    <div class="card-header bg-info text-white">
-        <h5 class="mb-0">Top 5 Cervezas Más Vendidas</h5>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex justify-content-between">IPA Roja <span class="badge bg-primary">320 ventas</span></li>
-        <li class="list-group-item d-flex justify-content-between">Golden Ale <span class="badge bg-primary">290 ventas</span></li>
-        <li class="list-group-item d-flex justify-content-between">Negra Stout <span class="badge bg-primary">250 ventas</span></li>
-        <li class="list-group-item d-flex justify-content-between">Honey <span class="badge bg-primary">200 ventas</span></li>
-        <li class="list-group-item d-flex justify-content-between">Scotch <span class="badge bg-primary">180 ventas</span></li>
-    </ul>
-</div>
-
-<!-- Gráfico de stock (placeholder) -->
-<div class="card mb-4">
-    <div class="card-header bg-secondary text-white">
-        <h5 class="mb-0">Gráfico de Stock por Marca</h5>
-    </div>
-    <div class="card-body text-center">
-        <img src="https://via.placeholder.com/600x250?text=Gráfico+de+Stock+por+Marca" alt="Grafico Stock" class="img-fluid">
-    </div>
-</div>
-
 <!-- Alertas del sistema -->
 <div class="card mb-4">
     <div class="card-header bg-danger text-white">
         <h5 class="mb-0">Alertas del Sistema</h5>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item text-danger">Cerveza "APA Lupulada" con stock en 0.</li>
-        <li class="list-group-item text-danger">Error al generar reporte de ventas del mes.</li>
-        <li class="list-group-item text-warning">Actualizar precios antes de fin de mes.</li>
+        @forelse ($alertas as $alerta)
+            <li class="list-group-item text-{{ $alerta['tipo'] }}">
+                {{ $alerta['mensaje'] }}
+            </li>
+        @empty
+            <li class="list-group-item text-muted">No hay alertas en el sistema.</li>
+        @endforelse
     </ul>
 </div>
 
-<!-- Actividades recientes -->
-<div class="card mb-4">
-    <div class="card-header bg-dark text-white">
-        <h5 class="mb-0">Actividades Recientes</h5>
-    </div>
-    <div class="card-body">
-        <ul class="list-unstyled">
-            <li>🕒 10:32 - Se actualizó el stock de "Golden Ale".</li>
-            <li>🕒 09:47 - Se registró nuevo pedido de 15 unidades.</li>
-            <li>🕒 08:15 - Admin modificó los precios de la línea "Stout".</li>
-        </ul>
-    </div>
-</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('stockChart').getContext('2d');
+
+    const stockChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {!! json_encode($stockPorMarca->keys()) !!},
+            datasets: [{
+                label: 'Stock total',
+                data: {!! json_encode($stockPorMarca->values()) !!},
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 10
+                    }
+                }
+            }
+        }
+    });
+
+    const ctxFacturacion = document.getElementById('facturacionChart').getContext('2d');
+    //Facturacion por cerveza
+    const facturacionChart = new Chart(ctxFacturacion, {
+        type: 'bar',
+        data: {
+            labels: {!! json_encode($facturacionPorCerveza->pluck('cerveza')) !!},
+            datasets: [{
+                label: 'Total Facturado ($)',
+                data: {!! json_encode($facturacionPorCerveza->pluck('total_facturado')) !!},
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            indexAxis: 'y', // horizontal bar chart
+            scales: {
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
 @endsection

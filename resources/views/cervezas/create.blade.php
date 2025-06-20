@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2 class="mb-4">Nueva Cerveza</h2>
+    <h2 class="titulo-panel">Nueva Cerveza</h2>
 
     @if ($errors->any())
         <div class="alert alert-danger">

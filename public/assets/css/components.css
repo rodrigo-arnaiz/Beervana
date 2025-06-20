@@ -1,0 +1,177 @@
+.card {
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+button {
+    background-color: #cfae3f;
+    color: white;
+    border: none;
+}
+
+.btn-solid {
+    background-color: hsl(34, 55%, 25%);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn-solid:hover {
+    background-color: #422b0d;
+    color: white;
+}
+
+.btn-outline-danger {
+    color: #422b0d;
+    border-color: #422b0d;
+}
+
+.btn-outline-danger:hover {
+    background-color: #422b0d;
+    color: #fff;
+}
+
+.btn-outline-brown {
+    color: #422b0d;
+    border: 1px solid #422b0d;
+    background-color: transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 0.5rem 1.5rem;
+}
+
+.btn-outline-brown:hover,
+.btn-outline-brown:focus,
+.btn-outline-brown:active {
+    background-color: #422b0d;
+    color: #fff;
+    border-color: #422b0d;
+    box-shadow: none;
+}
+
+.btn-detail-custom {
+    background-color: hsl(34, 55%, 25%) !important;
+    border-color: hsl(34, 55%, 25%) !important;
+    color: white !important;
+}
+
+.btn-detail-custom:hover {
+    background-color: #503c24 !important;
+    border-color: #503c24 !important;
+}
+
+.btn-delete-custom {
+    background-color: #986D38 !important;
+    border-color: #986D38 !important;
+    color: white !important;
+}
+
+.btn-delete-custom:hover {
+    background-color: #7a5a2d !important;
+    border-color: #7a5a2d !important;
+}
+
+.btn-edit-custom {
+    background-color: #EFB454 !important;
+    border-color: #EFB454 !important;
+    color: white !important;
+}
+
+.btn-edit-custom:hover {
+    background-color: #f1c276 !important;
+    border-color: #f1c276 !important;
+}
+
+.btn-secondary {
+    background-color: #bda27a !important;
+    border-color: #a88f69 !important;
+    color: white !important;
+}
+
+.text-center h4 {
+    margin-bottom: 1rem !important;
+    font-size: 1.5rem;
+}
+
+.form-outline {
+    margin-bottom: 1rem !important;
+}
+
+.form-control,
+.form-control-sm {
+    max-width: 100%;
+}
+
+.table-custom thead th {
+    background-color: #FAEAC5 !important;
+}
+
+.table-custom tbody tr {
+    background-color: #FAEAC5;
+}
+
+.overlay-text {
+    padding: 1.5rem;
+}
+
+.text-center.pt-1.mb-3 {
+    margin-bottom: 1rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-top: 0.5rem !important;
+}
+
+
+/* Estilos para las tablas */
+
+.titulo-panel {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.table-custom {
+    background-color: rgba(255, 248, 228, 0.95); /* beige cálido */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.table-custom thead th {
+    background-color: #CFAE3F;
+    color: #422b0d;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #b9932e;
+}
+
+.table-custom tbody tr:nth-child(odd) {
+    background-color: rgba(255, 248, 228, 0.65);
+}
+
+.table-custom tbody tr:nth-child(even) {
+    background-color: rgba(249, 235, 200, 0.65);
+}
+
+.btn-accion {
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-accion i {
+    pointer-events: none;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}

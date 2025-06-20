@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="mb-4">Estilos</h1>
+        <h2 class="titulo-panel">Estilos</h2>
         <a href="{{ route('estilos.create') }}" class="btn btn-detail-custom mb-3">
             <i class="fas fa-plus"></i> Nuevo Estilo
         </a>
@@ -31,43 +31,40 @@
                 <a href="{{ route('estilos.index') }}" class="btn btn-secondary">Limpiar</a>
             </div>
         </form>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Tipo Fermentación</th>
-                    <th>Descripción</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($estilos as $estilo)
+        <div class="table-responsive">
+            <table class="table table-striped table-custom align-middle text-center">
+                <thead>
                     <tr>
-                        <td>{{ $estilo->id }}</td>
-                        <td>{{ $estilo->nombre }}</td>
-                        <td>{{ $estilo->tipoFermentacion->nombre ?? '' }}</td>
-                        <td>{{ $estilo->descripcion }}</td>
-                        <td>
-                            <a href="{{ route('estilos.edit', $estilo->id) }}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            {{-- <form action="{{ route('estilos.destroy', $estilo->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de eliminar este estilo?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
-                        </form> --}}
-                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#modalEliminar" data-id="{{ $estilo->id }}"
-                                data-nombre="{{ $estilo->nombre }}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Tipo Fermentación</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($estilos as $estilo)
+                        <tr>
+                            <td>{{ $estilo->id }}</td>
+                            <td>{{ $estilo->nombre }}</td>
+                            <td>{{ $estilo->tipoFermentacion->nombre ?? '' }}</td>
+                            <td>{{ $estilo->descripcion }}</td>
+                            <td>
+                                <a href="{{ route('estilos.edit', $estilo->id) }}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modalEliminar" data-id="{{ $estilo->id }}"
+                                    data-nombre="{{ $estilo->nombre }}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         <div class="d-flex justify-content-center my-3">
             {{ $estilos->links() }}
         </div>
@@ -94,21 +91,21 @@
             </div>
         </div>
     </div>
-<script>
-    const modalEliminar = document.getElementById('modalEliminar');
-    modalEliminar.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const id = button.getAttribute('data-id');
-        const nombre = button.getAttribute('data-nombre');
+    <script>
+        const modalEliminar = document.getElementById('modalEliminar');
+        modalEliminar.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const id = button.getAttribute('data-id');
+            const nombre = button.getAttribute('data-nombre');
 
-        const nombreSpan = modalEliminar.querySelector('#nombreEstilo');
-        const form = modalEliminar.querySelector('#formEliminar');
+            const nombreSpan = modalEliminar.querySelector('#nombreEstilo');
+            const form = modalEliminar.querySelector('#formEliminar');
 
-        // Mostrar el nombre en el modal
-        nombreSpan.textContent = nombre;
+            // Mostrar el nombre en el modal
+            nombreSpan.textContent = nombre;
 
-        // Setear la acción del formulario
-        form.action = `/estilos/${id}`;
-    });
-</script>
+            // Setear la acción del formulario
+            form.action = `/estilos/${id}`;
+        });
+    </script>
 @endsection

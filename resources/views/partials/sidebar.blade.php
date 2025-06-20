@@ -2,11 +2,11 @@
 
 <nav id="sidebar" class="d-none d-lg-block sidebar bg-dark text-white">
     <div class="container-fluid">
-    <div class="sidebar-header d-flex justify-content-start align-items-center py-2" style="margin-top: 10px;margin-bottom: -8px;">
-        <a href="{{ route('home') }}" class="text-decoration-none">
-            <h4 class="mb-0">Beervana</h4>
-        </a>
-    </div>
+<div class="sidebar-header d-flex justify-content-start align-items-center py-2" style="margin-top: 10px; margin-bottom: -8px;">
+    <a href="{{ route('home') }}" class="text-decoration-none">
+        <img src="{{ asset('assets/beervana_side_logo.png') }}" alt="Beervana" style="height: 28px;">
+    </a>
+</div>
     </div>  
     <hr>
     <div class="sidebar-body nav flex-column">

@@ -7,11 +7,11 @@
 </head>
 
 <body>
-    <div class="d-flex">
+    <div class="d-flex flex-column flex-lg-row">
         @include('partials.sidebar')
         <div class="flex-grow-1">
             @include('partials.nav')
-            <div class="container mt-4 ">
+            <div class="container-fluid mt-4 px-3">
                 @yield('content')
             </div>
         </div>

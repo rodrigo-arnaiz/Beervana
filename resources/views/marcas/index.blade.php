@@ -1,14 +1,15 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2 class="mb-4">Listado de Marcas</h2>
+    <h2 class="titulo-panel">Listado de Marcas</h2>
     <a href="{{ route('marcas.create') }}" class="btn btn-detail-custom mb-3">
         <i class="fas fa-plus"></i> Nueva Marca
     </a>
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-    <table class="table table-striped">
+<div class="table-responsive">
+    <table class="table table-striped table-custom align-middle text-center">
         <thead>
             <tr>
                 <th>#</th>
@@ -20,20 +21,13 @@
             @foreach ($marcas as $marca)
                 <tr>
                     <td>{{ $marca->id }}</td>
-                    <td>{{ $marca->nombre }}</td>
+                    <td class="text-center ps-3">{{ $marca->nombre }}</td>
                     <td>
-                        <a href="{{ route('marcas.edit', $marca) }}" class="btn btn-sm btn-warning">
+                        <a href="{{ route('marcas.edit', $marca) }}" class="btn btn-sm btn-warning btn-accion">
                             <i class="fas fa-edit"></i>
                         </a>
-                        {{-- <form action="{{ route('marcas.destroy', $marca) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Eliminar esta marca?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </form> --}}
-                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+
+                        <button type="button" class="btn btn-sm btn-danger btn-accion" data-bs-toggle="modal"
                             data-bs-target="#modalEliminar" data-id="{{ $marca->id }}"
                             data-nombre="{{ $marca->nombre }}">
                             <i class="fas fa-trash"></i>
@@ -43,6 +37,7 @@
             @endforeach
         </tbody>
     </table>
+</div>
     <div class="d-flex justify-content-center my-3">
         {{ $marcas->links() }}
     </div>

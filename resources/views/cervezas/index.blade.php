@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2 class="mb-4">Listado de Cervezas</h2>
+    <h2 class="titulo-panel">Listado de Cervezas</h2>
 
     <a href="{{ route('cervezas.create') }}" class="btn btn-detail-custom mb-3">
         <i class="fas fa-plus"></i> Nueva Cerveza
@@ -42,58 +42,55 @@
             </a>
         </div>
     </form>
-    <table class="table table-striped ">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nombre</th>
-                <th>Marca</th>
-                <th>Estilo</th>
-                <th>Graduación</th>
-                <th>Precio</th>
-                <th>Stock</th>
-                <th>Imagen</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($cervezas as $cerveza)
+    <div class="table-responsive">
+        <table class="table table-striped table-custom align-middle text-center">
+            <thead>
                 <tr>
-                    <td class="align-middle">{{ $cerveza->id }}</td>
-                    <td class="align-middle">{{ $cerveza->nombre }}</td>
-                    <td class="align-middle">{{ $cerveza->marca->nombre ?? '-' }}</td>
-                    <td class="align-middle">{{ $cerveza->estilo->nombre ?? '-' }}</td>
-                    <td class="align-middle">{{ $cerveza->graduacion }}%</td>
-                    <td class="align-middle">${{ number_format($cerveza->precio, 2) }}</td>
-                    <td class="align-middle">{{ $cerveza->stock }}</td>
-                    <td>
-                        <img src="{{ $cerveza->imagen }}" style="width: 100px; height: auto;">
-                    </td>
-                    <td class="align-middle">
-                        <a href="{{ route('cervezas.edit', $cerveza) }}" class="btn btn-sm btn-edit-custom">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        {{-- <form action="{{ route('cervezas.destroy', $cerveza) }}" method="POST" class="d-inline"
-                              onsubmit="return confirm('¿Estás seguro de eliminar esta cerveza?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                        </form> --}}
-                        <button type="button" class="btn btn-sm btn-delete-custom" data-bs-toggle="modal"
-                            data-bs-target="#modalEliminar" data-id="{{ $cerveza->id }}"
-                            data-nombre="{{ $cerveza->nombre }}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                         <button type="button" class="btn btn-sm btn-detail-custom" 
-                            data-bs-toggle="modal"
-                            data-bs-target="#detalleModal{{ $cerveza->id }}">
-                            <i class="fas fa-info-circle"></i>
-                        </button>
-                    </td>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Estilo</th>
+                    <th>Graduación</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($cervezas as $cerveza)
+                    <tr>
+                        <td class="align-middle">{{ $cerveza->id }}</td>
+                        <td class="align-middle">{{ $cerveza->nombre }}</td>
+                        <td class="align-middle">{{ $cerveza->marca->nombre ?? '-' }}</td>
+                        <td class="align-middle">{{ $cerveza->estilo->nombre ?? '-' }}</td>
+                        <td class="align-middle">{{ $cerveza->graduacion }}%</td>
+                        <td class="align-middle">${{ number_format($cerveza->precio, 2) }}</td>
+                        <td class="align-middle">{{ $cerveza->stock }}</td>
+                        <td>
+                            <img src="{{ $cerveza->imagen }}" style="width: 100px; height: auto;">
+                        </td>
+                        <td class="align-middle">
+                            <a href="{{ route('cervezas.edit', $cerveza) }}" class="btn btn-sm btn-edit-custom">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                            <button type="button" class="btn btn-sm btn-delete-custom" data-bs-toggle="modal"
+                                data-bs-target="#modalEliminar" data-id="{{ $cerveza->id }}"
+                                data-nombre="{{ $cerveza->nombre }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-detail-custom" data-bs-toggle="modal"
+                                data-bs-target="#detalleModal{{ $cerveza->id }}">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
     @foreach ($cervezas as $cerveza)
         @includeIf('cervezas.partials.modal_detalle', ['cerveza' => $cerveza])
     @endforeach

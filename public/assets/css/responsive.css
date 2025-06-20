@@ -1,0 +1,106 @@
+@media (min-width: 992px) {
+    .card.login-card {
+        width: 87vw;
+    }
+
+    .login-container {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card.login-card {
+        width: 95vw;
+    }
+
+    .table-responsive table {
+        min-width: 900px;
+        white-space: nowrap;
+    }
+}
+
+@media (min-width: 768px) {
+    .gradient-form {
+        padding: 1rem 0;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .overlay-text {
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .gradient-custom-2 {
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .logo-img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .gradient-custom-2 {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: .3rem;
+        border-top-left-radius: .3rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+    }
+
+    .table-responsive table {
+        min-width: 900px;
+        white-space: nowrap;
+    }
+
+    .card.login-card {
+        width: 100vw;
+    }
+
+    .gradient-form {
+        padding: 0.5rem;
+    }
+
+    .table-responsive img {
+        max-width: 80px;
+        height: auto;
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    touch-action: pan-x;
+}
+
+.table-responsive table {
+    min-width: 900px;
+    white-space: nowrap;
+}
+
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: #cfae3f;
+    border-radius: 4px;
+}
