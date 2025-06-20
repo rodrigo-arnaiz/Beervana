@@ -1,0 +1,37 @@
+.container.py-3 {
+    height: 100%;
+    padding: 0 !important;
+}
+
+.sidebar {
+    width: 300px;
+    min-height: 100vh;
+    background-color: #343a40;
+}
+
+.sidebar .sidebar-header a {
+    color: #F2D797;
+    text-decoration: none;
+}
+
+.sidebar .sidebar-header a:hover {
+    color: #fff;
+}
+
+.sidebar .nav-link {
+    color: #F2D797;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #D09F58;
+    color: #F2D797;
+}
+
+.navbar-title {
+    width: 300px;
+}
+
+.navbar-title .inner {
+    background-color: #343a40;
+    color: white;
+}

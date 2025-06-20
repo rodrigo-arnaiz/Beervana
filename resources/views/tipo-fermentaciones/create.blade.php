@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Nuevo Tipo de Fermentación</h1>
+    <h2 class="titulo-panel">Nuevo Tipo de Fermentación</h2>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">

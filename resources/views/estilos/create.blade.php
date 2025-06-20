@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Nuevo Estilo</h1>
+    <h2 class="titulo-panel">Nuevo Estilo</h2>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">

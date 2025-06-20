@@ -1,33 +1,26 @@
-<!-- resources/views/partials/navbar.blade.php -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-gradient-custom shadow-sm py-3" style="background-color: rgba(219, 174, 126, 0.5);">
+    <div class="container-fluid position-relative">
 
-    <div class="container-fluid">
-        <button type="button" id="sidebarCollapse" class="btn btn-info">
+        <!-- Botón menú lateral mobile -->
+        <button class="btn btn-outline-dark d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
             <i class="fas fa-bars"></i>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto">
-                <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="dropdown-item">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    </form>
-                </li>
-                {{-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-user-circle"></i> Admin User
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                                </ul>
-                            </li> --}}
-            </ul>
+        <!-- Título centrado SOLO visible en mobile -->
+        <div class="d-lg-none position-absolute top-50 start-50 translate-middle">
+            <a href="{{ route('home') }}" class="text-dark text-decoration-none">
+                <img src="{{ asset('assets/beervana_nav_logo.png') }}" alt="Beervana" style="height: 40px;">
+            </a>
+        </div>
+
+        <!-- Logout -->
+        <div class="ms-auto">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button title="Cerrar sesión" type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </form>
         </div>
     </div>
 </nav>

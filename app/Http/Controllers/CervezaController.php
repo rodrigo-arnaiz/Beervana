@@ -7,6 +7,9 @@ use App\Models\Estilo;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Str;
+
 
 
 class CervezaController extends Controller
@@ -16,7 +19,7 @@ class CervezaController extends Controller
      */
     public function index(Request $request)
     {
-        $marcas  = Marca::orderBy('nombre')->get();
+        $marcas = Marca::orderBy('nombre')->get();
         $estilos = Estilo::orderBy('nombre')->get();
 
         $cervezas = Cerveza::with('marca', 'estilo');
@@ -61,12 +64,20 @@ class CervezaController extends Controller
             'estilo_id' => 'required|exists:estilos,id',
             'ibu' => 'required|numeric',
             'capacidad' => 'required|string|max:20',
-            'imagen' => 'required|image|mimes:png,jpg,jpeg',
+            'imagen' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             'stock' => 'required|numeric',
             'descripcion' => 'nullable|string',
         ]);
 
-        $rutaImagen = $request->file('imagen')->store('imagenes', 'public');
+        if (!$request->hasFile('imagen')) {
+            return back()->withErrors(['imagen' => 'La imagen no se subió correctamente.']);
+        }
+
+        #$filename = 'cervezas/' . Str::uuid() . '.' . $request->file('imagen')->getClientOriginalExtension();
+        $filename = $request->nombre . Str::uuid();
+        $path = Storage::disk('cloudinary')->put($filename, $request->file('imagen'));
+
+        $url = Storage::disk('cloudinary')->url($path);
 
         Cerveza::create([
             'nombre' => $request->nombre,
@@ -77,7 +88,8 @@ class CervezaController extends Controller
             'estilo_id' => $request->estilo_id,
             'ibu' => $request->ibu,
             'capacidad' => $request->capacidad,
-            'imagen' => $rutaImagen, // se guarda el path de la imagen
+            'imagen' => $url,
+            'image_public_id' => $path,
             'stock' => $request->stock,
             'descripcion' => $request->descripcion,
         ]);
@@ -118,20 +130,24 @@ class CervezaController extends Controller
             'estilo_id' => 'required|exists:estilos,id',
             'ibu' => 'required|numeric',
             'capacidad' => 'required|string|max:20',
-            'imagen' => 'nullable|image|mimes:jpg,png,jpeg',
+            'imagen' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
             'stock' => 'required|numeric',
             'descripcion' => 'nullable|string',
         ]);
 
         if ($request->hasFile('imagen')) {
-            // Opcional: eliminar imagen anterior
-            if ($cerveza->imagen && Storage::disk('public')->exists($cerveza->imagen)) {
-                Storage::disk('public')->delete($cerveza->imagen);
+
+            if ($cerveza->image_public_id) {
+                Storage::disk('cloudinary')->delete($cerveza->image_public_id);
             }
 
-            // Guardar la nueva imagen
-            $path = $request->file('imagen')->store('imagenes', 'public');
-            $cerveza->imagen = $path;
+            $filename = $request->nombre . Str::uuid();
+            $path = Storage::disk('cloudinary')->put($filename, $request->file('imagen'));
+
+            $url = Storage::disk('cloudinary')->url($path);
+
+            $cerveza->imagen = $url;
+            $cerveza->image_public_id = $path;
         }
 
         // Actualizar los demás campos
@@ -144,14 +160,14 @@ class CervezaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(Cerveza $cerveza)
     {
-        // Eliminar la imagen del disco si existe
-        if ($cerveza->imagen && Storage::disk('public')->exists($cerveza->imagen)) {
-            Storage::disk('public')->delete($cerveza->imagen);
+        // Eliminar imagen de Cloudinary si existe
+        if ($cerveza->image_public_id) {
+            Storage::disk('cloudinary')->delete($cerveza->image_public_id);
         }
 
-        // Eliminar la cerveza
         $cerveza->delete();
 
         return redirect()->route('cervezas.index')->with('success', 'Cerveza eliminada exitosamente');

@@ -1,0 +1,49 @@
+.gradient-form {
+    background-color: #eeeeee;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0;
+}
+
+.gradient-custom-2 {
+    background-image:
+        linear-gradient(to right, rgba(207, 174, 63, 0.7), rgba(231, 205, 53, 0.7), rgba(250, 146, 27, 0.6), rgba(180, 123, 69, 0.7)),
+        url('../beervana.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.login-container {
+    max-width: 95vw;
+}
+
+.card.login-card {
+    max-width: 680px;
+    width: 87vw;
+    height: 120%;
+    min-height: 120%;
+}
+
+.card.login-card .col-lg-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 120%;
+}
+
+.logo-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(207, 174, 63, 0.6);
+    border: 3px solid white;
+    background-color: white;
+}

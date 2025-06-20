@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Factura extends Model
 {
-    protected $fillable = ['user_id', 'fecha', 'precio_total'];
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'fecha', 'precio_total', 'pagada'];
 
     public function detalles() {
         return $this->hasMany(DetalleFactura::class);

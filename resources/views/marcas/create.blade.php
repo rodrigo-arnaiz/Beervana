@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2>Nueva Marca</h2>
+    <h2 class="titulo-panel">Nueva Marca</h2>
 
     <form action="{{ route('marcas.store') }}" method="POST">
         @csrf
