@@ -21,7 +21,8 @@ return [
      * You can enable CORS for 1 or multiple paths.
      * Example: ['api/*']
      */
-    'paths' => ['api/*', 'my_api/*', 'my_api/login'],
+    'paths' => ['api/*'],
+    #'paths' => ['api/*', 'my_api/*', 'my_api/login'],
 
     /*
     * Matches the request method. `['*']` allows all methods.

@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FacturaController;
 use App\Http\Controllers\Api\CarritoController;
+use App\Http\Controllers\Api\CervezaController;
 
 
 // Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/cervezas', [CervezaController::class, 'index']);
 
 // Rutas protegidas
 Route::middleware('auth:sanctum')->group(function () {
