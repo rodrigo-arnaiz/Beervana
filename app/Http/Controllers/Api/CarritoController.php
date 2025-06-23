@@ -75,7 +75,7 @@ class CarritoController extends Controller
         return response()->json(['message' => 'Carrito vaciado']);
     }
 
-    public function comprar(Request $request)
+    public function generarFactura(Request $request)
     {
         $user = $request->user();
         $carrito = Carrito::with('items.cerveza')->where('user_id', $user->id)->first();
@@ -115,10 +115,6 @@ class CarritoController extends Controller
                     'subtotal' => $subtotal,
                 ]);
 
-                // Descontamos el stock
-                $cerveza->stock -= $item->cantidad;
-                $cerveza->save();
-
                 $precio_total += $subtotal;
             }
 
@@ -132,7 +128,7 @@ class CarritoController extends Controller
             DB::commit();
 
             return response()->json([
-                'message' => 'Compra realizada con éxito',
+                'message' => 'Factura generada exitosamente',
                 #'factura_id' => $factura->id
                 'factura' => $factura->load('detalles.cerveza')
             ], 201);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use App\Models\Factura;
 use App\Models\DetalleFactura;
 
@@ -21,16 +21,34 @@ class FacturaController extends Controller
 
     public function pagar(Request $request, $id)
     {
-        $factura = Factura::findOrFail($id);
+        //$factura = Factura::findOrFail($id);
+        $factura = Factura::with('detalles.cerveza')->findOrFail($id);
 
         if ($factura->pagada) {
             return response()->json(['message' => 'La factura ya fue pagada'], 400);
         }
 
-        $factura->pagada = true;
-        $factura->save();
+        DB::beginTransaction();
 
-        return response()->json(['message' => 'Factura pagada con éxito', 'factura' => $factura]);
+        try {
+            foreach ($factura->detalles as $detalle) {
+                $cerveza = $detalle->cerveza;
+
+                if ($cerveza->stock < $detalle->cantidad) {
+                    throw new \Exception("Stock insuficiente para la cerveza {$cerveza->nombre}");
+                }
+
+                $cerveza->stock -= $detalle->cantidad;
+                $cerveza->save();
+            }
+            $factura->pagada = true;
+            $factura->save();
+            DB::commit();
+            return response()->json(['message' => 'Factura pagada con éxito', 'factura' => $factura]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Error al pagar la factura: ' . $e->getMessage()], 500);
+        }
     }
 
     public function store(Request $request)

@@ -12,18 +12,19 @@ use App\Http\Controllers\Api\CervezaController;
 // Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/cervezas', [CervezaController::class, 'index']);
+
 
 // Rutas protegidas
 Route::middleware('auth:sanctum')->group(function () {
 
     // 📦 Carrito de compras (usuario común)
+    Route::get('/cervezas', [CervezaController::class, 'index']);
     Route::get('/carrito', [CarritoController::class, 'ver']);
     Route::post('/carrito/agregar', [CarritoController::class, 'agregar']);
     Route::delete('/carrito/quitar/{cerveza}', [CarritoController::class, 'quitar']);
-    Route::post('/carrito/comprar', [CarritoController::class, 'comprar']);
+    Route::post('/carrito/generar-factura', [CarritoController::class, 'generarFactura']);
     Route::get('/facturas', [FacturaController::class, 'index']);
-    Route::post('/facturas/{id}/pagar', [FacturaController::class, 'pagar']);
+    Route::post('/factura/{id}/pagar', [FacturaController::class, 'pagar']);
 
     // 🔓 Logout
     Route::post('/logout', [AuthController::class, 'logout']);
