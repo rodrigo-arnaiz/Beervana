@@ -7,12 +7,18 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FacturaController;
 use App\Http\Controllers\Api\CarritoController;
 use App\Http\Controllers\Api\CervezaController;
+use App\Http\Controllers\Api\MarcaController;
+use App\Http\Controllers\Api\EstiloController;
+
 
 
 // Auth
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+//para filtros
+Route::get('/marcas', [MarcaController::class, 'index']);
+Route::get('/estilos', [EstiloController::class, 'index']);
 
 // Rutas protegidas
 Route::middleware('auth:sanctum')->group(function () {
