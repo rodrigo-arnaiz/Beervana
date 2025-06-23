@@ -7,8 +7,8 @@
     <div class="col-md-3">
         <div class="card text-white bg-primary">
             <div class="card-body">
-                <h5 class="card-title">Total Cervezas</h5>
-                <p class="card-text fs-4">120</p>
+                <h5 class="card-title">Total tipos de Cervezas</h5>
+                <p class="card-text fs-4">{{ $totalCervezas }}</p>
             </div>
         </div>
     </div>
@@ -42,15 +42,14 @@
 
 
 <!-- Gráfico de facturación por cerveza -->
-<div class="card mb-4">
+<div class="card mb-4" style="min-height: 400px;">
     <div class="card-header bg-success text-white">
         <h5 class="mb-0">Facturación por Cerveza</h5>
     </div>
     <div class="card-body">
-        <canvas id="facturacionChart" height="100"></canvas>
+        <canvas id="facturacionChart" height="400"></canvas>
     </div>
 </div>
-
 
 <!-- Ranking de cervezas más vendidas -->
 <div class="card mb-4">
@@ -70,57 +69,12 @@
 </div>
 
 <!-- Gráfico de stock por marca -->
-<div class="card mb-4">
+<div class="card mb-4" style="min-height: 400px;">
     <div class="card-header bg-secondary text-white">
         <h5 class="mb-0">Gráfico de Stock por Marca</h5>
     </div>
     <div class="card-body">
-        <canvas id="stockChart" height="100"></canvas>
-    </div>
-</div>
-
-<!-- Tabla de resumen de stock -->
-<div class="card mb-4">
-    <div class="card-header bg-warning text-dark">
-        <h5 class="mb-0">Resumen de Stock de Cervezas</h5>
-    </div>
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Marca</th>
-                        <th>Stock</th>
-                        <th>Precio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($cervezas as $index => $cervezas)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $cervezas->nombre }}</td>
-                            <td>{{ $cervezas->marca->nombre}}</td>
-                            <td>
-                                @if ($cervezas->stock <= 10)
-                                    <span class="badge bg-danger">{{ $cervezas->stock }} bajo</span>
-                                @elseif ($cervezas->stock <= 30)
-                                    <span class="badge bg-warning text-dark">{{ $cervezas->stock }}</span>
-                                @else
-                                    <span class="badge bg-success">{{ $cervezas->stock }}</span>
-                                @endif
-                            </td>
-                            <td>${{ number_format($cervezas->precio, 2, ',', '.') }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">No hay cervezas en stock.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        <canvas id="stockChart" height="400"></canvas>
     </div>
 </div>
 
