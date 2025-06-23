@@ -47,3 +47,10 @@
     border: 3px solid white;
     background-color: white;
 }
+
+.btn-solid {
+    background-color: hsl(34, 55%, 25%);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+}
