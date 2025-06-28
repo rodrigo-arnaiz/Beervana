@@ -24,7 +24,7 @@
     </div>
     <div class="col-md-3">
         <div class="card text-white bg-warning">
-            <div class="card-body">
+            <div title="pedidos pendientes de entrega" class="card-body">
                 <h5 class="card-title">Pedidos Pendientes</h5>
                 <p class="card-text fs-4"> {{ $pedidosPendientes }} </p>
             </div>
@@ -32,7 +32,7 @@
     </div>
     <div class="col-md-3">
         <div class="card text-white bg-danger">
-            <div class="card-body">
+            <div title="El Stock que se encuentra por debajo del umbral pre-definido ( < 10 unidades)" class="card-body">
                 <h5 class="card-title">Stock Crítico</h5>
                 <p class="card-text fs-4">{{ $totalStockCritico }} ítems</p>
             </div>
