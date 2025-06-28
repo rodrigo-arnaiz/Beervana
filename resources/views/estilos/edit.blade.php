@@ -34,8 +34,8 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{{ route('estilos.index') }}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-solid">Actualizar</button>
+        <a href="{{ route('estilos.index') }}" class="btn btn-cremita ">Cancelar</a>
     </form>
 </div>
 @endsection

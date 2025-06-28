@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2>Nueva Marca</h2>
+    <h2 class="titulo-panel">Nueva Marca</h2>
 
     <form action="{{ route('marcas.store') }}" method="POST">
         @csrf
@@ -12,7 +12,7 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-        <button class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
-        <a href="{{ route('marcas.index') }}" class="btn btn-secondary"><i class="fas fa-ban"></i> Cancelar</a>
+        <button class="btn btn-solid"><i class="fas fa-save"></i> Guardar</button>
+        <a href="{{ route('marcas.index') }}" class="btn btn-cremita"><i class="fas fa-ban"></i> Cancelar</a>
     </form>
 @endsection

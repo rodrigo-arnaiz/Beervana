@@ -15,7 +15,7 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-        <button class="btn btn-primary">Actualizar</button> 
-        <a href="{{ route('marcas.index') }}" class="btn btn-secondary">Cancelar </a>
+        <button class="btn btn-solid">Actualizar</button> 
+        <a href="{{ route('marcas.index') }}" class="btn btn-cremita" >Cancelar </a>
     </form>
 @endsection
