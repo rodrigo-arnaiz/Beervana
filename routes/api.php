@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/facturas', [FacturaController::class, 'index']);
     Route::post('/factura/{id}/pagar', [FacturaController::class, 'pagar']);
     Route::post('/carrito/sincronizar', [CarritoController::class, 'sincronizar']);
+    Route::post('/carrito/limpiar', [CarritoController::class, 'vaciar']);
     
 
     // 🔓 Logout
