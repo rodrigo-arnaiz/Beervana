@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
@@ -39,8 +39,8 @@
             <textarea name="descripcion" class="form-control" rows="3"
                     placeholder="Notas, origen, características…">{{ old('descripcion', $tipoFermentacion->descripcion) }}</textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{{ route('tipo-fermentaciones.index') }}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-solid">Actualizar</button>
+        <a href="{{ route('tipo-fermentaciones.index') }}" class="btn btn-cremita  ">Cancelar</a>
     </form>
 </div>
 @endsection

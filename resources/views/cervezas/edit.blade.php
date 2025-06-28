@@ -20,7 +20,7 @@
 
         @include('cervezas.partials.edit_form', ['cerveza' => $cerveza])
 
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a href="{{ route('cervezas.index') }}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-solid">Actualizar</button>
+        <a href="{{ route('cervezas.index') }}" class="btn btn-cremita"> Cancelar </a>
     </form>
 @endsection

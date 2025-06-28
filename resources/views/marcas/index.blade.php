@@ -23,11 +23,11 @@
                     <td>{{ $marca->id }}</td>
                     <td class="text-center ps-3">{{ $marca->nombre }}</td>
                     <td>
-                        <a href="{{ route('marcas.edit', $marca) }}" class="btn btn-sm btn-warning btn-accion">
+                        <a href="{{ route('marcas.edit', $marca) }}" class="btn btn-sm btn-edit-custom">
                             <i class="fas fa-edit"></i>
                         </a>
 
-                        <button type="button" class="btn btn-sm btn-danger btn-accion" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-sm btn-delete-custom" data-bs-toggle="modal"
                             data-bs-target="#modalEliminar" data-id="{{ $marca->id }}"
                             data-nombre="{{ $marca->nombre }}">
                             <i class="fas fa-trash"></i>
@@ -44,25 +44,25 @@
     <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
+                <div class="modal-header bg-danger-custom text-white">
                     <h5 class="modal-title" id="modalEliminarLabel">¿Eliminar marca?</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Cerrar"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     ¿Estás seguro de que deseas eliminar la marca <strong id="nombreMarca"></strong>?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-edit-custom" data-bs-dismiss="modal">Cancelar</button>
                     <form id="formEliminar" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-delete-custom">Eliminar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
         const modalEliminar = document.getElementById('modalEliminar');
         modalEliminar.addEventListener('show.bs.modal', function(event) {
