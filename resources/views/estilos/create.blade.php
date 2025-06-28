@@ -33,8 +33,8 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar</button>
-        <a href="{{ route('estilos.index') }}" class="btn btn-secondary"><i class="fas fa-ban"></i> Cancelar</a>
+        <button type="submit" class="btn btn-solid"><i class="fas fa-save"></i> Guardar</button>
+        <a href="{{ route('estilos.index') }}" class="btn btn-cremita"><i class="fas fa-ban"></i> Cancelar</a>
     </form>
 </div>
 @endsection

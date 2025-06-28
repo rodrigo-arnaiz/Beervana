@@ -19,7 +19,7 @@ button {
 }
 
 .btn-solid {
-    background-color: hsl(34, 55%, 25%);
+    background-color: hsl(34, 55%, 25%)!important;
     color: white;
     border: none;
     padding: 0.5rem 1.5rem;
@@ -88,6 +88,14 @@ button {
 .btn-edit-custom:hover {
     background-color: #f1c276 !important;
     border-color: #f1c276 !important;
+}
+
+.btn-cremita {
+    background-color: #b69447;
+    color: #312009;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
 }
 
 .btn-secondary {
@@ -174,4 +182,22 @@ button {
 
 .table td, .table th {
     vertical-align: middle;
+}
+
+.pagination .page-link {
+    color: #582509;
+    border: 1px solid #582509;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #582509;
+    border-color: #f8f2ee;
+    color: white;
+}
+
+.pagination .page-link:hover {
+    background-color: #b6724d;
+    color: white;
 }
