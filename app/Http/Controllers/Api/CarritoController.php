@@ -10,6 +10,7 @@ use App\Models\Cerveza;
 use App\Models\Factura;
 use App\Models\DetalleFactura;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class CarritoController extends Controller
 {
@@ -75,67 +76,97 @@ class CarritoController extends Controller
         return response()->json(['message' => 'Carrito vaciado']);
     }
 
-    public function generarFactura(Request $request)
-    {
-        $user = $request->user();
-        $carrito = Carrito::with('items.cerveza')->where('user_id', $user->id)->first();
-        #$carrito = Carrito::where('user_id', $user->id)->with('items.cerveza')->first();
+public function generarFactura(Request $request)
+{
+    $user = $request->user();
+    $items = $request->input('items', []);
 
-        if (!$carrito || $carrito->items->isEmpty()) {
-            return response()->json(['message' => 'El carrito está vacío'], 400);
-        }
+    if (empty($items)) {
+        return response()->json(['message' => 'El carrito está vacío'], 400);
+    }
 
-        DB::beginTransaction();
+    DB::beginTransaction();
 
-        try {
-            $precio_total = 0;
+    try {
+        $precio_total = 0;
 
-            // Crear factura
-            $factura = Factura::create([
-                'user_id' => $user->id,
-                'fecha' => now(),
-                'precio_total' => 0,
-                'pagada' => false,
-            ]);
+        $factura = Factura::create([
+            'user_id' => $user->id,
+            'fecha' => now(),
+            'precio_total' => 0,
+            'pagada' => false,
+        ]);
 
-            foreach ($carrito->items as $item) {
-                $cerveza = $item->cerveza;
+        foreach ($items as $item) {
+            $cerveza = Cerveza::find($item['id']);
 
-                if ($cerveza->stock < $item->cantidad) {
-                    throw new \Exception("No hay stock suficiente para la cerveza {$cerveza->nombre}");
-                }
-
-                $subtotal = $cerveza->precio * $item->cantidad;
-
-                DetalleFactura::create([
-                    'factura_id' => $factura->id,
-                    'cerveza_id' => $cerveza->id,
-                    'cantidad' => $item->cantidad,
-                    'precio_unitario' => $cerveza->precio,
-                    'subtotal' => $subtotal,
-                ]);
-
-                $precio_total += $subtotal;
+            if (!$cerveza || $cerveza->stock < $item['cantidad']) {
+                throw new \Exception("No hay stock suficiente para la cerveza {$cerveza->nombre}");
             }
 
-            /* $factura->precio_total = $precio_total;
-            $factura->save(); */
-            $factura->update(['precio_total' => $precio_total]);
+            $subtotal = $cerveza->precio * $item['cantidad'];
 
-            // Vaciar carrito
-            $carrito->items()->delete();
+            DetalleFactura::create([
+                'factura_id' => $factura->id,
+                'cerveza_id' => $cerveza->id,
+                'cantidad' => $item['cantidad'],
+                'precio_unitario' => $cerveza->precio,
+                'subtotal' => $subtotal,
+            ]);
 
-            DB::commit();
-
-            return response()->json([
-                'message' => 'Factura generada exitosamente',
-                #'factura_id' => $factura->id
-                'factura' => $factura->load('detalles.cerveza')
-            ], 201);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['error' => 'Error al procesar la compra'], 500);
+            $precio_total += $subtotal;
         }
+
+        $factura->update(['precio_total' => $precio_total]);
+
+        DB::commit();
+
+        return response()->json([
+            'message' => 'Factura generada exitosamente',
+            'factura' => $factura->load('detalles.cerveza')
+        ], 201);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json(['error' => $e->getMessage()], 500);
     }
+}
+
+
+
+public function sincronizar(Request $request)
+{
+    $user = auth()->user();
+
+    if (!$user) {
+        return response()->json(['error' => 'Usuario no autenticado'], 401);
+    }
+
+    $items = $request->input('items', []);
+
+    \Log::info('Items recibidos para sincronizar:', $items);
+
+
+    if (!is_array($items) || empty($items)) {
+        return response()->json(['error' => 'No se recibieron items válidos'], 400);
+    }
+
+    $carrito = Carrito::firstOrCreate(['user_id' => $user->id]);
+
+    // Borrar los ítems anteriores del carrito
+    $carrito->items()->delete();
+
+    // Insertar los nuevos ítems asociados correctamente
+    foreach ($items as $item) {
+        $carrito->items()->create([
+            'cerveza_id' => $item['cerveza_id'],
+            'cantidad' => $item['cantidad']
+        ]);
+    }
+
+    return response()->json(['message' => 'Carrito sincronizado correctamente']);
+}
+
+
+
 }
