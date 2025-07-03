@@ -22,7 +22,7 @@ class DashboardController extends Controller
     // Sumamos el stock directamente con agregación
     $totalStock = Cerveza::sum('stock');
 
-    $pedidosPendientes = Factura::where('pagada', false)->count();
+    $pedidosPendientes = Factura::where('pagada', true)->count();
 
     $totalStockCritico = Cerveza::where('stock', '<', 10)->count();
 
