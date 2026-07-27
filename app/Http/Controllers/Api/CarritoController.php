@@ -144,9 +144,6 @@ public function sincronizar(Request $request)
 
     $items = $request->input('items', []);
 
-    \Log::info('Items recibidos para sincronizar:', $items);
-
-
     if (!is_array($items) || empty($items)) {
         return response()->json(['error' => 'No se recibieron items válidos'], 400);
     }
