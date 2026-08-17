@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\CarritoController;
 use App\Http\Controllers\Api\CervezaController;
 use App\Http\Controllers\Api\MarcaController;
 use App\Http\Controllers\Api\EstiloController;
+use App\Http\Controllers\Api\ConfiguracionController;
+use App\Http\Controllers\Api\PedidoController;
 
 
 
@@ -20,6 +22,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/marcas', [MarcaController::class, 'index']);
 Route::get('/estilos', [EstiloController::class, 'index']);
 
+// Costo del envío, para que el carrito no lo tenga hardcodeado
+Route::get('/costo-envio', [ConfiguracionController::class, 'envio']);
+
 // Rutas protegidas
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -28,12 +33,28 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/carrito', [CarritoController::class, 'ver']);
     Route::post('/carrito/agregar', [CarritoController::class, 'agregar']);
     Route::delete('/carrito/quitar/{cerveza}', [CarritoController::class, 'quitar']);
-    Route::post('/carrito/generar-factura', [CarritoController::class, 'generarFactura']);
+    // 🧾 Pedidos: comprar reserva stock, pagar emite la factura
+    Route::get('/pedidos', [PedidoController::class, 'index']);
+    // {codigo} y no {id}: el id es secuencial y se puede recorrer a mano
+    Route::get('/pedidos/{codigo}', [PedidoController::class, 'show']);
+    Route::post('/pedidos', [PedidoController::class, 'store']);
+    Route::post('/pedidos/{codigo}/cancelar', [PedidoController::class, 'cancelar']);
+    // El cliente avisa que va a pagarlo en el local. No cobra nada.
+    Route::post('/pedidos/{codigo}/confirmar', [PedidoController::class, 'confirmar']);
+
+    // 💵 Mostrador: el cobro es presencial, así que registrarlo es acción del
+    // personal. Si el cliente pudiera llamarlo, marcaría su propio pedido como
+    // pagado y se llevaría la mercadería sin pagar. El control de is_admin está
+    // dentro del controlador para responder 403 en JSON.
+    Route::get('/mostrador/pedido', [PedidoController::class, 'buscarPorCodigo']);
+    Route::post('/mostrador/pedidos/{id}/cobrar', [PedidoController::class, 'pagar']);
+
+    // Historial de compras: solo ventas concretadas
     Route::get('/facturas', [FacturaController::class, 'index']);
-    Route::post('/factura/{id}/pagar', [FacturaController::class, 'pagar']);
+    Route::get('/facturas/{id}', [FacturaController::class, 'show']);
     Route::post('/carrito/sincronizar', [CarritoController::class, 'sincronizar']);
     Route::post('/carrito/limpiar', [CarritoController::class, 'vaciar']);
-    
+
 
     // 🔓 Logout
     Route::post('/logout', [AuthController::class, 'logout']);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Cerveza;
 use App\Models\Factura;
-use App\Models\DetalleFactura;
+use App\Models\Pedido;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -22,16 +22,18 @@ class DashboardController extends Controller
     // Sumamos el stock directamente con agregación
     $totalStock = Cerveza::sum('stock');
 
-    $pedidosPendientes = Factura::where('pagada', true)->count();
+    // Ahora sí son pedidos pendientes de verdad: los que reservan stock
+    $pedidosPendientes = Pedido::reservando()->count();
+    $comprasPagadas = Pedido::where('estado', Pedido::PAGADO)->count();
 
     $totalStockCritico = Cerveza::where('stock', '<', 10)->count();
 
     // Top cervezas vendidas
-    $topCervezas = DB::table('detalle_factura')
-        ->join('facturas', 'detalle_factura.factura_id', '=', 'facturas.id')
-        ->join('cervezas', 'detalle_factura.cerveza_id', '=', 'cervezas.id')
-        ->select('cervezas.nombre', DB::raw('SUM(detalle_factura.cantidad) as total_vendido'))
-        ->where('facturas.pagada', true)
+    $topCervezas = DB::table('pedido_items')
+        ->join('pedidos', 'pedido_items.pedido_id', '=', 'pedidos.id')
+        ->join('cervezas', 'pedido_items.cerveza_id', '=', 'cervezas.id')
+        ->select('cervezas.nombre', DB::raw('SUM(pedido_items.cantidad) as total_vendido'))
+        ->where('pedidos.estado', Pedido::PAGADO)
         ->groupBy('cervezas.nombre')
         ->orderByDesc('total_vendido')
         ->limit(5)
@@ -45,11 +47,11 @@ class DashboardController extends Controller
         ->pluck('total_stock', 'nombre'); // para obtener [marca => total_stock]
 
     // Facturación por cerveza
-    $facturacionPorCerveza = DB::table('detalle_factura')
-        ->join('cervezas', 'detalle_factura.cerveza_id', '=', 'cervezas.id')
-        ->join('facturas', 'detalle_factura.factura_id', '=', 'facturas.id')
-        ->where('facturas.pagada', true)
-        ->select('cervezas.nombre as cerveza', DB::raw('SUM(detalle_factura.subtotal) as total_facturado'))
+    $facturacionPorCerveza = DB::table('pedido_items')
+        ->join('cervezas', 'pedido_items.cerveza_id', '=', 'cervezas.id')
+        ->join('pedidos', 'pedido_items.pedido_id', '=', 'pedidos.id')
+        ->where('pedidos.estado', Pedido::PAGADO)
+        ->select('cervezas.nombre as cerveza', DB::raw('SUM(pedido_items.subtotal) as total_facturado'))
         ->groupBy('cervezas.nombre')
         ->orderByDesc('total_facturado')
         ->limit(10)

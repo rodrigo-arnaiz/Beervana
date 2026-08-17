@@ -3,103 +3,36 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Factura;
-use App\Models\DetalleFactura;
+use Illuminate\Http\Request;
 
+/**
+ * Solo lectura: las facturas se emiten al pagar un pedido (PedidoController),
+ * nunca antes. Que exista una factura significa que la venta se concretó.
+ */
 class FacturaController extends Controller
 {
+    /** Historial de compras del usuario. */
     public function index(Request $request)
     {
-        $facturas = Factura::with(['detalles.cerveza'])
+        // Se incluye el usuario porque la factura impresa lleva los datos del
+        // cliente. El modelo oculta password y remember_token al serializar.
+        $facturas = Factura::with('pedido.items.cerveza', 'user')
             ->where('user_id', $request->user()->id)
+            ->orderByDesc('id')
             ->get();
 
         return response()->json($facturas);
     }
 
-    public function pagar(Request $request, $id)
+    public function show(Request $request, $id)
     {
-        //$factura = Factura::findOrFail($id);
-        $factura = Factura::with('detalles.cerveza')->findOrFail($id);
+        // Filtrar por user_id es obligatorio: con findOrFail a secas cualquier
+        // usuario autenticado podría leer la factura de otro pasando su id.
+        $factura = Factura::with('pedido.items.cerveza', 'user')
+            ->where('user_id', $request->user()->id)
+            ->findOrFail($id);
 
-        if ($factura->pagada) {
-            return response()->json(['message' => 'La factura ya fue pagada'], 400);
-        }
-
-        DB::beginTransaction();
-
-        try {
-            foreach ($factura->detalles as $detalle) {
-                $cerveza = $detalle->cerveza;
-
-                if ($cerveza->stock < $detalle->cantidad) {
-                    throw new \Exception("Stock insuficiente para la cerveza {$cerveza->nombre}");
-                }
-
-                $cerveza->stock -= $detalle->cantidad;
-                $cerveza->save();
-            }
-            $factura->pagada = true;
-            $factura->save();
-            DB::commit();
-            return response()->json(['message' => 'Factura pagada con éxito', 'factura' => $factura]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['error' => 'Error al pagar la factura: ' . $e->getMessage()], 500);
-        }
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'fecha' => 'required|date',
-            'items' => 'required|array|min:1',
-            'items.*.cerveza_id' => 'required|exists:cervezas,id',
-            'items.*.cantidad' => 'required|integer|min:1',
-            'items.*.precio_unitario' => 'required|numeric|min:0',
-        ]);
-
-        $user = $request->user();
-
-        DB::beginTransaction();
-
-        try {
-            $total = 0;
-
-            $factura = Factura::create([
-                'user_id' => $user->id,
-                'fecha' => $request->fecha,
-                'precio_total' => 0,
-                'pagada' => false,
-            ]);
-
-            foreach ($request->items as $item) {
-                $subtotal = $item['cantidad'] * $item['precio_unitario'];
-                $total += $subtotal;
-
-                DetalleFactura::create([
-                    'factura_id' => $factura->id,
-                    'cerveza_id' => $item['cerveza_id'],
-                    'cantidad' => $item['cantidad'],
-                    'precio_unitario' => $item['precio_unitario'],
-                    'subtotal' => $subtotal,
-                ]);
-            }
-
-            $factura->update(['precio_total' => $total]);
-
-            DB::commit();
-
-            return response()->json([
-                'message' => 'Factura creada correctamente',
-                'factura' => $factura->load('detalles.cerveza')
-            ], 201);
-
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return response()->json(['error' => 'Error al crear la factura', 'details' => $e->getMessage()], 500);
-        }
+        return response()->json($factura);
     }
 }
