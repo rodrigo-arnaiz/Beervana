@@ -15,7 +15,11 @@ class CervezaController extends Controller
     #}
     public function index(Request $request)
     {
-        $query = Cerveza::with('marca', 'estilo')->where('stock', '>', 0);
+        // disponibles() filtra por stock MENOS lo reservado por pedidos
+        // pendientes vigentes, y agrega las columnas `reservado` y `disponible`.
+        // Una cerveza con stock 5 y 5 unidades reservadas no aparece: no se
+        // puede pedir aunque físicamente esté en el depósito.
+        $query = Cerveza::with('marca', 'estilo')->disponibles();
 
         if ($request->filled('marca_id')) {
             $query->where('marca_id', $request->marca_id);
