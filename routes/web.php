@@ -8,6 +8,8 @@ use App\Http\Controllers\TipoFermentacionController;
 use App\Http\Controllers\EstiloController;
 use App\Http\Controllers\CervezaController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MostradorController;
+use App\Http\Controllers\Admin\MisCobrosTotalesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -49,6 +51,14 @@ Route::get('/', function () {
 | Este bloque puede reactivarse cuando se quiera requerir login nuevamente.
 |
 */
+
+// El mostrador lo usa quien atiende: empleados y admins. No exige ser admin
+// porque cobrar no requiere poder editar el catálogo.
+Route::middleware(['auth', 'personal'])->group(function () {
+    Route::get('/mostrador', [MostradorController::class, 'index'])->name('mostrador.index');
+    Route::post('/mostrador/pedidos/{id}/cobrar', [MostradorController::class, 'cobrar'])->name('mostrador.cobrar');
+    Route::get('/mis-cobros', [MisCobrosTotalesController::class, 'index'])->name('mis-cobros.index');
+});
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
