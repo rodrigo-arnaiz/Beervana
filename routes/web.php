@@ -10,6 +10,8 @@ use App\Http\Controllers\CervezaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MostradorController;
 use App\Http\Controllers\Admin\MisCobrosTotalesController;
+use App\Http\Controllers\Admin\UsuarioController;
+use App\Http\Controllers\Admin\PerfilController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -58,10 +60,25 @@ Route::middleware(['auth', 'personal'])->group(function () {
     Route::get('/mostrador', [MostradorController::class, 'index'])->name('mostrador.index');
     Route::post('/mostrador/pedidos/{id}/cobrar', [MostradorController::class, 'cobrar'])->name('mostrador.cobrar');
     Route::get('/mis-cobros', [MisCobrosTotalesController::class, 'index'])->name('mis-cobros.index');
+
+    // Los datos propios: no exige ser admin porque un empleado tiene que poder
+    // cambiarse la contraseña sin pedirle permiso a nadie.
+    Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
+    Route::put('/perfil', [PerfilController::class, 'update'])->name('perfil.update');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Manejar roles es cosa de administradores: va en el grupo 'admin' y no
+    // en 'personal', porque un empleado cobra pero no reparte permisos.
+    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
+    Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->name('usuarios.update');
+    Route::patch('/usuarios/{usuario}/rol', [UsuarioController::class, 'cambiarRol'])->name('usuarios.rol');
+    Route::post('/usuarios/{usuario}/bloquear', [UsuarioController::class, 'bloquear'])->name('usuarios.bloquear');
+    Route::post('/usuarios/{usuario}/desbloquear', [UsuarioController::class, 'desbloquear'])->name('usuarios.desbloquear');
+    Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('marcas', MarcaController::class);
     Route::resource('tipo-fermentaciones', TipoFermentacionController::class)

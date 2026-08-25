@@ -26,7 +26,9 @@ Route::get('/estilos', [EstiloController::class, 'index']);
 Route::get('/costo-envio', [ConfiguracionController::class, 'envio']);
 
 // Rutas protegidas
-Route::middleware('auth:sanctum')->group(function () {
+// no.bloqueado va acá y no en cada ruta: una cuenta bloqueada no tiene que
+// poder hacer nada, ni comprar ni mirar su carrito.
+Route::middleware(['auth:sanctum', 'no.bloqueado'])->group(function () {
 
     // 📦 Carrito de compras (usuario común)
     Route::get('/cervezas', [CervezaController::class, 'index']);
