@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\URL;
@@ -26,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Paginator::useBootstrapFive();
+
+        RedirectIfAuthenticated::redirectUsing(
+            fn ($request) => $request->user()?->paginaInicial() ?? route('login')
+        );
     }
 }

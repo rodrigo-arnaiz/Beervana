@@ -27,6 +27,40 @@
     color: #F2D797;
 }
 
+/* Pie del sidebar: la cuenta actual y el botón de salir.
+   mt-auto (Bootstrap) lo empuja abajo de todo; acá van solo los colores. */
+.sidebar-cuenta {
+    border-top: 1px solid rgba(242, 215, 151, 0.25);
+    padding: 0.85rem 1rem;
+}
+
+.sidebar-cuenta-usuario {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.375rem;
+    color: #F2D797;
+    text-decoration: none;
+}
+
+.sidebar-cuenta-usuario:hover {
+    background-color: #D09F58;
+    color: #fff;
+}
+
+/* min-width: 0 para que el text-truncate del nombre funcione dentro del flex:
+   sin esto el item no se deja achicar y el nombre largo desborda el sidebar. */
+.sidebar-cuenta-datos {
+    min-width: 0;
+    line-height: 1.2;
+}
+
+.sidebar-cuenta-rol {
+    color: rgba(242, 215, 151, 0.65);
+    font-size: 0.75rem;
+}
+
 .navbar-title {
     width: 300px;
 }
