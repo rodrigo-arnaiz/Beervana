@@ -9,6 +9,7 @@ use App\Http\Controllers\EstiloController;
 use App\Http\Controllers\CervezaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MostradorController;
+use App\Http\Controllers\Admin\CobroMercadoPagoController;
 use App\Http\Controllers\Admin\MisCobrosTotalesController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\PerfilController;
@@ -61,6 +62,18 @@ Route::middleware(['auth', 'personal'])->group(function () {
     Route::post('/mostrador/pedidos/{id}/cobrar', [MostradorController::class, 'cobrar'])->name('mostrador.cobrar');
     Route::get('/mis-cobros', [MisCobrosTotalesController::class, 'index'])->name('mis-cobros.index');
 
+    // Cobro por Mercado Pago generado en la caja: el cajero lo dispara, el
+    // cliente escanea el QR con el celular y paga ahí mismo. Va en 'personal'
+    // y no en 'admin' porque cobrar es justamente lo que hace un empleado.
+    Route::post('/mostrador/pedidos/{id}/mercadopago', [CobroMercadoPagoController::class, 'crear'])
+        ->name('mostrador.mp.crear');
+    Route::get('/mostrador/mercadopago/{pago}', [CobroMercadoPagoController::class, 'esperar'])
+        ->name('mostrador.mp.esperar');
+    Route::get('/mostrador/mercadopago/{pago}/estado', [CobroMercadoPagoController::class, 'estado'])
+        ->name('mostrador.mp.estado');
+    Route::post('/mostrador/mercadopago/{pago}/cancelar', [CobroMercadoPagoController::class, 'cancelar'])
+        ->name('mostrador.mp.cancelar');
+
     // Los datos propios: no exige ser admin porque un empleado tiene que poder
     // cambiarse la contraseña sin pedirle permiso a nadie.
     Route::get('/perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
@@ -88,3 +101,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
         'cervezas' => 'cerveza',
     ]);
 });
+

@@ -11,8 +11,15 @@ use App\Http\Controllers\Api\MarcaController;
 use App\Http\Controllers\Api\EstiloController;
 use App\Http\Controllers\Api\ConfiguracionController;
 use App\Http\Controllers\Api\PedidoController;
+use App\Http\Controllers\Api\PagoMercadoPagoController;
+use App\Http\Controllers\WebhookMercadoPagoController;
 
 
+
+// Mercado Pago avisa por acá el resultado de un pago. Va sin auth porque quien
+// llama es MP, no una persona. El controlador nunca le cree al estado que trae
+// el aviso: toma el id y le pregunta a MP.
+Route::post('/webhooks/mercadopago', WebhookMercadoPagoController::class);
 
 // Auth
 Route::post('/register', [AuthController::class, 'register']);
@@ -44,6 +51,11 @@ Route::middleware(['auth:sanctum', 'no.bloqueado'])->group(function () {
     // El cliente avisa que va a pagarlo en el local. No cobra nada.
     Route::post('/pedidos/{codigo}/confirmar', [PedidoController::class, 'confirmar']);
 
+    // 💳 Pago online. {codigo} y no {id}, igual que el resto: el id es
+    // secuencial y se puede recorrer a mano.
+    Route::post('/pedidos/{codigo}/mercadopago', [PagoMercadoPagoController::class, 'crear']);
+    Route::get('/pedidos/{codigo}/pago', [PagoMercadoPagoController::class, 'estado']);
+
     // 💵 Mostrador: el cobro es presencial, así que registrarlo es acción del
     // personal. Si el cliente pudiera llamarlo, marcaría su propio pedido como
     // pagado y se llevaría la mercadería sin pagar. El control de is_admin está
@@ -56,7 +68,7 @@ Route::middleware(['auth:sanctum', 'no.bloqueado'])->group(function () {
     Route::get('/facturas/{id}', [FacturaController::class, 'show']);
     Route::post('/carrito/sincronizar', [CarritoController::class, 'sincronizar']);
     Route::post('/carrito/limpiar', [CarritoController::class, 'vaciar']);
-
+    
 
     // 🔓 Logout
     Route::post('/logout', [AuthController::class, 'logout']);

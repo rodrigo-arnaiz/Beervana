@@ -35,4 +35,27 @@ return [
         ],
     ],
 
+
+    /*
+    |-------------------------------------------------------------------------
+    | Mercado Pago (Checkout Pro)
+    |-------------------------------------------------------------------------
+    |
+    | Las credenciales de PRUEBA arrancan con TEST-. Con esas, ningun pago es
+    | real: se cobra con las tarjetas de prueba de MP y no se mueve plata.
+    |
+    | url_retorno  adonde vuelve el cliente despues de pagar (el frontend).
+    | url_webhook  donde MP avisa el resultado. En local no se usa porque MP
+    |              no puede alcanzar localhost; ver README-mercadopago.md.
+    |
+    */
+    'mercadopago' => [
+        'access_token' => env('MERCADOPAGO_ACCESS_TOKEN'),
+        'public_key' => env('MERCADOPAGO_PUBLIC_KEY'),
+        'moneda' => env('MERCADOPAGO_MONEDA', 'ARS'),
+        'url_retorno' => rtrim(env('MERCADOPAGO_URL_RETORNO', env('FRONTEND_URL', 'http://localhost:3000')), '/'),
+        'url_webhook' => env('MERCADOPAGO_URL_WEBHOOK'),
+        'auto_return' => env('MERCADOPAGO_AUTO_RETURN', true),
+    ],
+
 ];
