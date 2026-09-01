@@ -56,6 +56,11 @@ return [
         'url_retorno' => rtrim(env('MERCADOPAGO_URL_RETORNO', env('FRONTEND_URL', 'http://localhost:3000')), '/'),
         'url_webhook' => env('MERCADOPAGO_URL_WEBHOOK'),
         'auto_return' => env('MERCADOPAGO_AUTO_RETURN', true),
+
+        // 'real' habla con la API de Mercado Pago. 'simulado' no llama a nadie:
+        // sirve para desarrollar y demostrar el flujo entero sin credenciales,
+        // sin internet y sin depender de que el panel de MP esté en pie.
+        'modo' => env('MERCADOPAGO_MODO', 'real'),
     ],
 
 ];

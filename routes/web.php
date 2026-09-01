@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\Admin\PerfilController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\CheckoutSimuladoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,3 +103,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     ]);
 });
 
+/*
+|--------------------------------------------------------------------------
+| Checkout simulado
+|--------------------------------------------------------------------------
+|
+| Reemplaza la pantalla de Mercado Pago cuando MERCADOPAGO_MODO=simulado.
+| Va sin login porque el checkout real tampoco lo tiene: al cliente se le pasa
+| un link o un QR y paga, sin cuenta en Beervana. Las dos rutas responden 404
+| si el modo no es simulado, así que en producción no existen.
+|
+*/
+Route::get('/checkout-simulado/{codigo}', [CheckoutSimuladoController::class, 'mostrar'])
+    ->name('checkout.simulado');
+Route::post('/checkout-simulado/{codigo}', [CheckoutSimuladoController::class, 'resolver'])
+    ->name('checkout.simulado.resolver');
