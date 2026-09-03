@@ -61,6 +61,11 @@ return [
         // sirve para desarrollar y demostrar el flujo entero sin credenciales,
         // sin internet y sin depender de que el panel de MP esté en pie.
         'modo' => env('MERCADOPAGO_MODO', 'real'),
+
+        // false: se paga como invitado con tarjeta de prueba (no hay que crear
+        // cuentas). true: se paga con un usuario de prueba, que vive solo en el
+        // sandbox y exige que el VENDEDOR tambien sea usuario de prueba.
+        'usar_sandbox' => env('MERCADOPAGO_USAR_SANDBOX', false),
     ],
 
 ];
