@@ -66,6 +66,12 @@ return [
         // cuentas). true: se paga con un usuario de prueba, que vive solo en el
         // sandbox y exige que el VENDEDOR tambien sea usuario de prueba.
         'usar_sandbox' => env('MERCADOPAGO_USAR_SANDBOX', false),
+
+        // QR presencial: el cobro se asocia a una caja (POS) de una sucursal.
+        // Los crea una sola vez el comando mp:caja. Sin esto el QR no se puede
+        // generar y el mostrador cae al link del checkout.
+        'user_id' => env('MERCADOPAGO_USER_ID'),
+        'caja' => env('MERCADOPAGO_CAJA'),
     ],
 
 ];
