@@ -44,6 +44,15 @@ class AuthController extends Controller
             ]);
         }
 
+        // El motivo se dice explícitamente en vez de devolver "credenciales
+        // inválidas": la persona escribió bien la contraseña y merece saber por
+        // qué no entra, si no reintenta para siempre.
+        if ($user->estaBloqueado()) {
+            throw ValidationException::withMessages([
+                'email' => ['Tu cuenta está bloqueada. Contactate con la tienda.'],
+            ]);
+        }
+
         $token = $user->createToken('token')->plainTextToken;
 
         Log::info($token);

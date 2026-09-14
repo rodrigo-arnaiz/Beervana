@@ -16,6 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'personal' => \App\Http\Middleware\PersonalMiddleware::class,
+            'no.bloqueado' => \App\Http\Middleware\BloqueadoMiddleware::class,
             'auth' => Authenticate::class,
             'auth:sanctum' => Authenticate::class, // Reutiliza el mismo
         ]);

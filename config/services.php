@@ -35,4 +35,43 @@ return [
         ],
     ],
 
+
+    /*
+    |-------------------------------------------------------------------------
+    | Mercado Pago (Checkout Pro)
+    |-------------------------------------------------------------------------
+    |
+    | Las credenciales de PRUEBA arrancan con TEST-. Con esas, ningun pago es
+    | real: se cobra con las tarjetas de prueba de MP y no se mueve plata.
+    |
+    | url_retorno  adonde vuelve el cliente despues de pagar (el frontend).
+    | url_webhook  donde MP avisa el resultado. En local no se usa porque MP
+    |              no puede alcanzar localhost; ver README-mercadopago.md.
+    |
+    */
+    'mercadopago' => [
+        'access_token' => env('MERCADOPAGO_ACCESS_TOKEN'),
+        'public_key' => env('MERCADOPAGO_PUBLIC_KEY'),
+        'moneda' => env('MERCADOPAGO_MONEDA', 'ARS'),
+        'url_retorno' => rtrim(env('MERCADOPAGO_URL_RETORNO', env('FRONTEND_URL', 'http://localhost:3000')), '/'),
+        'url_webhook' => env('MERCADOPAGO_URL_WEBHOOK'),
+        'auto_return' => env('MERCADOPAGO_AUTO_RETURN', true),
+
+        // 'real' habla con la API de Mercado Pago. 'simulado' no llama a nadie:
+        // sirve para desarrollar y demostrar el flujo entero sin credenciales,
+        // sin internet y sin depender de que el panel de MP esté en pie.
+        'modo' => env('MERCADOPAGO_MODO', 'real'),
+
+        // false: se paga como invitado con tarjeta de prueba (no hay que crear
+        // cuentas). true: se paga con un usuario de prueba, que vive solo en el
+        // sandbox y exige que el VENDEDOR tambien sea usuario de prueba.
+        'usar_sandbox' => env('MERCADOPAGO_USAR_SANDBOX', false),
+
+        // QR presencial: el cobro se asocia a una caja (POS) de una sucursal.
+        // Los crea una sola vez el comando mp:caja. Sin esto el QR no se puede
+        // generar y el mostrador cae al link del checkout.
+        'user_id' => env('MERCADOPAGO_USER_ID'),
+        'caja' => env('MERCADOPAGO_CAJA'),
+    ],
+
 ];

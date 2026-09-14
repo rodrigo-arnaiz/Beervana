@@ -31,12 +31,20 @@ class LoginController extends Controller
     {
         $user = Auth::user();
 
-        if ($user && $user->is_admin) {
-            return '/home';
+        // Una cuenta bloqueada no entra al panel aunque sea personal: el
+        // bloqueo tiene que valer en las dos puertas, no solo en la tienda.
+        if ($user && $user->estaBloqueado()) {
+            Auth::logout();
+            Session::flash('error', 'Tu cuenta está bloqueada. Contactate con un administrador.');
+            return '/login';
+        }
+
+        if ($user && $user->esPersonal()) {
+            return $user->paginaInicial();
         }
 
         Auth::logout();
-        Session::flash('error', 'Acceso denegado. Debes ser administrador para ingresar.');
+        Session::flash('error', 'Acceso denegado. No tenés permisos para entrar al panel.');
         return '/login';
     }
 
